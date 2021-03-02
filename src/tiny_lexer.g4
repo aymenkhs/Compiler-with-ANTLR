@@ -8,7 +8,7 @@ INTEGER: [+-]?([1-9]DIGIT*|'0');
 REAL: '0'|[+-]?[1-9]DIGIT*('.'DIGIT*)?;
 
 OPERATOR: '-'|'+'|'/'|'*';
-AFFECTION: '=';
+AFFECTATION: '=';
 COMPARAISON: '<' | '>' | '<=' | '>=' | '<>' | '==';
 
 IDF: (LOWERCASE|UPPERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
