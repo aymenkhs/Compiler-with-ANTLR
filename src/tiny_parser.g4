@@ -17,3 +17,7 @@ print: 'printCompil' '(' printcontent ')' ';';
 printcontent: IDF; // it may also be some text or integer or float
 
 scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan statement later
+
+if_statement: 'if' '(' ')' 'then' '{' '}';
+
+do_while: 'do' '{' '}' 'while' '(' ')';
