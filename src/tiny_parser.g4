@@ -9,7 +9,7 @@ type:'intCompil'|'floatCompil';
 idf_dec: IDF | IDF ',' idf_dec;
 
 instructions: | inst instructions| inst;
-inst: assignment | print | scan | if_statement; // an instruction can be an affectation/ an if statement/ do-while/ print and scan (maybe conditions or
+inst: assignment | print | scan | if_statement | do_while; // an instruction can be an affectation/ an if statement/ do-while/ print and scan (maybe conditions or
 
 assignment: IDF AFFECTATION (operande|operation) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
 
@@ -27,4 +27,4 @@ scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan 
 
 if_statement: 'if' '(' condition_mere ')' 'then' '{' instructions '}' ('else' '{' instructions '}')?;
 
-do_while: 'do' '{' condition_mere '}' 'while' '{' instructions '}';
+do_while: 'do' '{' instructions '}' 'while' '(' condition_mere ')';
