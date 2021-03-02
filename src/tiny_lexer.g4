@@ -11,8 +11,8 @@ OPERATOR: '-'|'+'|'/'|'*';
 AFFECTION: '=';
 COMPARAISON: '<' | '>' | '<=' | '>=' | '<>' | '==';
 
-IDF: (UPPERCASE|LOWERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
-PROGRAMNAME: UPPERCASE('_'|UPPERCASE|LOWERCASE)*;
+IDF: (LOWERCASE|UPPERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
+PROGRAMNAME: UPPERCASE('_'?(UPPERCASE|LOWERCASE))*;
 
-WHITESPACE: (' ' | '\t')+;
-NEWLINE: ('\r'? '\n' | '\r')+;
+WHITESPACE: (' ' | '\t')+ -> skip;
+NEWLINE: ('\r'? '\n' | '\r')+ -> skip;
