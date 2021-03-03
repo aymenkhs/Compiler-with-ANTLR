@@ -4,12 +4,23 @@ fragment DIGIT: [0-9];
 fragment LOWERCASE: [a-z];
 fragment UPPERCASE: [A-Z];
 
-INTEGER: [+-]?([1-9]DIGIT*|'0');
-REAL: '0'|[+-]?[1-9]DIGIT*('.'DIGIT*)?;
+INTEGER: ([1-9]DIGIT*|'0');
+REAL: '0'('.'DIGIT*)|[1-9]DIGIT*('.'DIGIT*);
 
-OPERATOR: '-'|'+'|'/'|'*';
+// operators
+PRODUCT: '*';
+DIV: '/';
+PLUS: '+';
+MINUS: '-';
+// affectation
 AFFECTATION: '=';
-COMPARAISON: '<' | '>' | '<=' | '>=' | '<>' | '==';
+// comparaison
+INF: '<';
+SUP: '>';
+INFEQUAL: '<=';
+SUPEQUAL: '>=';
+DIFFERENT: '!='|'<>';
+EGAL: '==';
 
 IDF: (LOWERCASE|UPPERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
 PROGRAMNAME: UPPERCASE('_'?(UPPERCASE|LOWERCASE))*;
