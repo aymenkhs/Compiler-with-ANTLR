@@ -19,14 +19,19 @@ like conditions, assignments, or print statements (or any other type of function
 */
 
 // assignements
-assignment: IDF AFFECTATION (operande|operation|STRING) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
+assignment: IDF AFFECTATION (operande|operation_mere|STRING) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
 
 // conditions
 condition_mere: condition COMPARAISON condition;
-condition: condition COMPARAISON condition | operande | operation;
+condition: condition COMPARAISON condition | operande | operation_origin;
 
 // operations
-operation: operation OPERATOR operation | operande;
+operation_origin : operation_mere SUP operation_mere | operation_mere INF operation_mere
+                    |operation_mere SUPEQUAL operation_mere |operation_mere INFEQUAL operation_mere
+                    |operation_mere EGAL operation_mere | operation_mere DIFFERENT operation_mere| operation_mere;
+operation_mere: operation_mere PLUS operation_fils | operation_mere MINUS operation_fils | operation_fils;
+operation_fils: operation_fils PRODUCT operation_gf |operation_fils DIV operation_gf |operation_gf;
+operation_gf:'(' operation_mere ')' | operande;
 operande: IDF | INTEGER | REAL;
 
 // print statement
