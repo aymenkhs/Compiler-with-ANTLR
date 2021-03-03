@@ -23,12 +23,9 @@ assignment: IDF AFFECTATION (operande|operation_mere|STRING) ';'; // or operatio
 
 // conditions
 condition_mere: condition COMPARAISON condition;
-condition: condition COMPARAISON condition | operande | operation_origin;
+condition: condition COMPARAISON condition | operande | operation_mere;
 
 // operations
-operation_origin : operation_mere SUP operation_mere | operation_mere INF operation_mere
-                    |operation_mere SUPEQUAL operation_mere |operation_mere INFEQUAL operation_mere
-                    |operation_mere EGAL operation_mere | operation_mere DIFFERENT operation_mere| operation_mere;
 operation_mere: operation_mere PLUS operation_fils | operation_mere MINUS operation_fils | operation_fils;
 operation_fils: operation_fils PRODUCT operation_gf |operation_fils DIV operation_gf |operation_gf;
 operation_gf:'(' operation_mere ')' | operande;

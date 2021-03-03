@@ -15,12 +15,7 @@ MINUS: '-';
 // affectation
 AFFECTATION: '=';
 // comparaison
-INF: '<';
-SUP: '>';
-INFEQUAL: '<=';
-SUPEQUAL: '>=';
-DIFFERENT: '!='|'<>';
-EGAL: '==';
+COMPARAISON: '<' | '>' | '<=' | '>=' | '<>' | '!=' | '==';
 
 IDF: (LOWERCASE|UPPERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
 PROGRAMNAME: UPPERCASE('_'?(UPPERCASE|LOWERCASE))*;
