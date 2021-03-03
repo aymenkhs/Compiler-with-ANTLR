@@ -18,6 +18,8 @@ PROGRAMNAME: UPPERCASE('_'?(UPPERCASE|LOWERCASE))*;
 WHITESPACE: (' ' | '\t')+ -> skip;
 NEWLINE: ('\r'? '\n' | '\r')+ -> skip;
 
+STRING: '"'~["]*'"';
+
 // comments
 INLINECOMMENT: '//'~[\n\r]* -> skip;
 BLOCKCOMMENT: '/*'~[*/]* '*/' -> skip;

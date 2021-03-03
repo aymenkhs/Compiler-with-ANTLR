@@ -6,7 +6,7 @@ program: 'compil' PROGRAMNAME '(' ')' '{' declarations 'start' instructions '}';
 // declaration
 declarations: | declaration_type declarations| declaration_type;
 declaration_type: type idf_dec ';';
-type:'intCompil'|'floatCompil';
+type:'intCompil'|'floatCompil'|'StringCompil';
 idf_dec: IDF | IDF ',' idf_dec;
 
 // general instructions
@@ -19,7 +19,7 @@ like conditions, assignments, or print statements (or any other type of function
 */
 
 // assignements
-assignment: IDF AFFECTATION (operande|operation) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
+assignment: IDF AFFECTATION (operande|operation|STRING) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
 
 // conditions
 condition_mere: condition COMPARAISON condition;
@@ -31,7 +31,7 @@ operande: IDF | INTEGER | REAL;
 
 // print statement
 print: 'printCompil' '(' printcontent ')' ';';
-printcontent: operande; // it may also be some text or integer or float
+printcontent: operande|STRING; // it may be a STRING, an idf ,an integer or a float
 
 // scan statement
 scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan statement later
