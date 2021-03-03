@@ -2,3 +2,5 @@
 out/
 .idea/
 *.iml
+
+file_program_tests/
