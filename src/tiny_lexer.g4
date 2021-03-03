@@ -14,5 +14,10 @@ COMPARAISON: '<' | '>' | '<=' | '>=' | '<>' | '==';
 IDF: (LOWERCASE|UPPERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
 PROGRAMNAME: UPPERCASE('_'?(UPPERCASE|LOWERCASE))*;
 
+// ignoring spaces and new lines
 WHITESPACE: (' ' | '\t')+ -> skip;
 NEWLINE: ('\r'? '\n' | '\r')+ -> skip;
+
+// comments
+INLINECOMMENT: '//'~[\n\r]* -> skip;
+BLOCKCOMMENT: '/*'~[*/]* '*/' -> skip;
