@@ -1,24 +1,49 @@
 
 public class QuadElement {
-    private String element[] = new String[4];
+    private String operateur, operande1, operande2, resultats;
 
-    public QuadElement(String val1, String val2, String val3, String val4)
-    {
-        this.element[0] = val1;
-        this.element[1] = val2;
-        this.element[2] = val3;
-        this.element[3] = val4;
+    public QuadElement(String operateur, String operande1, String operande2, String resultats) {
+        this.operateur = operateur;
+        this.operande1 = operande1;
+        this.operande2 = operande2;
+        this.resultats = resultats;
     }
 
-    public String getVal(int indice) {
-        return this.element[indice];
+    public String getOperateur() {
+        return operateur;
     }
 
-    public void setVal(int indice, String val) {
-        this.element[indice]=val;
+    public void setOperateur(String operateur) {
+        this.operateur = operateur;
     }
 
-    public String ToString() {
-        return "(" + element[0] + "," + element[1] + "," + element[2] + "," + element[3] + ")";
+    public String getOperande1() {
+        return operande1;
     }
+
+    public void setOperande1(String operande1) {
+        this.operande1 = operande1;
+    }
+
+    public String getOperande2() {
+        return operande2;
+    }
+
+    public void setOperande2(String operande2) {
+        this.operande2 = operande2;
+    }
+
+    public String getResultats() {
+        return resultats;
+    }
+
+    public void setResultats(String resultats) {
+        this.resultats = resultats;
+    }
+
+    @Override
+    public String toString() {
+        return "(" + operateur + "," + operande1 + "," + operande2 + "," + resultats + ")";
+    }
+
 }
