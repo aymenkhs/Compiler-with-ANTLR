@@ -11,8 +11,8 @@ public class Quadruplets {
         this.quadruplets.add(quad);
     }
 
-    public void addQuad(String Elem1, String Elem2, String Elem3, String Elem4){
-        this.quadruplets.add(new QuadElement(Elem1, Elem2, Elem3, Elem4));
+    public void addQuad(String operateur, String operande1, String operande2, String resultats){
+        this.quadruplets.add(new QuadElement(operateur, operande1, operande2, resultats));
     }
 
     public QuadElement getQuad(int index){
