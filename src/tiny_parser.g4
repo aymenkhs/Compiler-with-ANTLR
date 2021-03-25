@@ -39,10 +39,10 @@ printcontent: operande|STRING; // it may be a STRING, an idf ,an integer or a fl
 scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan statement later
 
 // if statement
-if_statement: 'if' '(' condition_mere ')' then (else_if)* (else)?;
+if_statement: 'if' '(' condition_mere ')' then (else_if)* (else_statement)?;
 else_if: 'else if' '(' condition_mere ')' then;
 then: 'then' '{' instructions '}';
-else: 'else' '{' instructions '}';
+else_statement: 'else' '{' instructions '}';
 
 // do while
 do_while: 'do' '{' instructions '}' 'while' '(' condition_mere ')';
