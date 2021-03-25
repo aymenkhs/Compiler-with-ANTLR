@@ -1,0 +1,7 @@
+compil HELLO_NG () {
+    intCompil a;
+    floatCompil a;
+    start
+    a=10;
+
+}
