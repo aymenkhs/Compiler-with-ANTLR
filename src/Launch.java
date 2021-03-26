@@ -17,7 +17,8 @@ public class Launch {
 
             AntlerToExp visitor= new AntlerToExp();
             visitor.visitProgram(tree);
-            System.out.println(visitor.semanticErrors);
+            System.out.println(visitor.getSemanticErrors());
+            System.out.println(visitor.getSymbol_table());
         }catch (IOException e){
             e.printStackTrace();
         }
