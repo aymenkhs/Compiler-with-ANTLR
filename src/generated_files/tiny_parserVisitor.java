@@ -1,4 +1,5 @@
-// Generated from C:/Users/youcef/Documents/GitHub/CompileP/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/aymen/Documents/SII/tpcompil/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+package generated_files;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -57,12 +58,6 @@ public interface tiny_parserVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAssignment(tiny_parserParser.AssignmentContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link tiny_parserParser#condition_mere}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCondition_mere(tiny_parserParser.Condition_mereContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link tiny_parserParser#condition}.
 	 * @param ctx the parse tree

@@ -19,11 +19,10 @@ like conditions, assignments, or print statements (or any other type of function
 */
 
 // assignements
-assignment: IDF AFFECTATION (operande|operation_mere|STRING) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
+assignment: IDF AFFECTATION (operation_mere|STRING) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
 
 // conditions
-condition: operandes_operation COMPARAISON operandes_operation;
-operandes_operation: operande | operation_mere;
+condition: operation_mere COMPARAISON operation_mere;
 
 // operations
 operation_mere: operation_mere PLUS operation_fils | operation_mere MINUS operation_fils | operation_fils;
@@ -33,7 +32,7 @@ operande: IDF | INTEGER | REAL;
 
 // print statement
 print: 'printCompil' '(' printcontent ')' ';';
-printcontent: operande|STRING; // it may be a STRING, an idf ,an integer or a float
+printcontent: operation_mere|STRING|IDF; // it may be a STRING, an idf ,an integer or a float
 
 // scan statement
 scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan statement later
