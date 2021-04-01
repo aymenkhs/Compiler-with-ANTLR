@@ -22,8 +22,8 @@ like conditions, assignments, or print statements (or any other type of function
 assignment: IDF AFFECTATION (operande|operation_mere|STRING) ';'; // or operation (there is no boolean type then there's no point to asign a comparaison)
 
 // conditions
-condition_mere: condition COMPARAISON condition;
-condition: condition COMPARAISON condition | operande | operation_mere;
+condition: operandes_operation COMPARAISON operandes_operation;
+operandes_operation: operande | operation_mere;
 
 // operations
 operation_mere: operation_mere PLUS operation_fils | operation_mere MINUS operation_fils | operation_fils;
@@ -39,10 +39,10 @@ printcontent: operande|STRING; // it may be a STRING, an idf ,an integer or a fl
 scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan statement later
 
 // if statement
-if_statement: 'if' '(' condition_mere ')' then (else_if)* (else_statement)?;
-else_if: 'else if' '(' condition_mere ')' then;
+if_statement: 'if' '(' condition ')' then (else_if)* (else_statement)?;
+else_if: 'else if' '(' condition ')' then;
 then: 'then' '{' instructions '}';
 else_statement: 'else' '{' instructions '}';
 
 // do while
-do_while: 'do' '{' instructions '}' 'while' '(' condition_mere ')';
+do_while: 'do' '{' instructions '}' 'while' '(' condition ')';
