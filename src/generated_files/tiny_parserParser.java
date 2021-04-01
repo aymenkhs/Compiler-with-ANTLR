@@ -3,11 +3,8 @@ package generated_files;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
 import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class tiny_parserParser extends Parser {
@@ -91,7 +88,7 @@ public class tiny_parserParser extends Parser {
 	}
 
 	@Override
-	public String getGrammarFileName() { return "tiny_parser.g4"; }
+	public String getGrammarFileName() { return "grammar/tiny_parser.g4"; }
 
 	@Override
 	public String[] getRuleNames() { return ruleNames; }
