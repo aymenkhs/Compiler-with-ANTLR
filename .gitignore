@@ -4,3 +4,4 @@ out/
 *.iml
 
 file_program_tests/
+src/*.txt
