@@ -1,4 +1,5 @@
-// Generated from C:/Users/youcef/Documents/GitHub/CompileP/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/aymen/Documents/SII/tpcompil/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+package generated_files;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -66,13 +67,6 @@ public class tiny_parserBaseVisitor<T> extends AbstractParseTreeVisitor<T> imple
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitAssignment(tiny_parserParser.AssignmentContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
-	@Override public T visitCondition_mere(tiny_parserParser.Condition_mereContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

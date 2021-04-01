@@ -1,9 +1,0 @@
-compil HELLO_NG () {
-    intCompil a,b,a;
-    floatCompil a,c;
-    StringCompil d;
-    start
-    a=10;
-    b=x;
-
-}

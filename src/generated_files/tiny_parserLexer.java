@@ -1,4 +1,5 @@
-// Generated from C:/Users/youcef/Documents/GitHub/CompileP/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/aymen/Documents/SII/tpcompil/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+package generated_files;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

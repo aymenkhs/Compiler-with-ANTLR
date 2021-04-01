@@ -2,6 +2,8 @@ import org.antlr.v4.runtime.Token;
 
 import java.util.ArrayList;
 
+import generated_files.*;
+
 public class AntlerToExp extends tiny_parserBaseVisitor {
 
      private ArrayList<String> vars;
@@ -44,7 +46,6 @@ public class AntlerToExp extends tiny_parserBaseVisitor {
 
     @Override
     public Object visitProgram(tiny_parserParser.ProgramContext ctx) {
-        System.out.println("NOOB?");
         return super.visitProgram(ctx);
     }
 
@@ -106,17 +107,13 @@ public class AntlerToExp extends tiny_parserBaseVisitor {
     }
 
     @Override
-    public Object visitCondition_mere(tiny_parserParser.Condition_mereContext ctx) {
-        return super.visitCondition_mere(ctx);
-    }
-
-    @Override
     public Object visitCondition(tiny_parserParser.ConditionContext ctx) {
         return super.visitCondition(ctx);
     }
 
     @Override
     public Object visitOperation_mere(tiny_parserParser.Operation_mereContext ctx) {
+        System.out.println("hey there");
         return super.visitOperation_mere(ctx);
     }
 
