@@ -1,12 +1,14 @@
 
 public class QuadElement {
     private String operateur, operande1, operande2, resultats;
+    private int num;
 
-    public QuadElement(String operateur, String operande1, String operande2, String resultats) {
+    public QuadElement(String operateur, String operande1, String operande2, String resultats, int num) {
         this.operateur = operateur;
         this.operande1 = operande1;
         this.operande2 = operande2;
         this.resultats = resultats;
+        this.num = num;
     }
 
     public String getOperateur() {
