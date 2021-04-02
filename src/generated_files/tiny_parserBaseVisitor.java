@@ -1,4 +1,4 @@
-// Generated from C:/Users/aymen/Documents/SII/tpcompil/TinyLanguage_SII/src\tiny_parser.g4 by ANTLR 4.9.1
+// Generated from C:/Users/aymen/Documents/SII/tpcompil/TinyLanguage_SII/src/grammar\tiny_parser.g4 by ANTLR 4.9.1
 package generated_files;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
