@@ -25,9 +25,9 @@ assignment: IDF AFFECTATION (operation_mere|STRING) ';'; // or operation (there 
 condition: operation_mere COMPARAISON operation_mere;
 
 // operations
-operation_mere: operation_mere PLUS operation_fils | operation_mere MINUS operation_fils | operation_fils;
-operation_fils: operation_fils PRODUCT operation_gf |operation_fils DIV operation_gf |operation_gf;
-operation_gf:'(' operation_mere ')' | operande;
+operation_mere: operation_fils PLUS operation_mere | operation_fils MINUS operation_mere | operation_fils;
+operation_fils: operation_gf PRODUCT operation_fils |operation_gf DIV operation_fils |operation_gf;
+operation_gf:'(' operation_mere ')' | MINUS operation_gf | PLUS operation_gf | operande ;
 operande: IDF | INTEGER | REAL;
 
 // print statement
