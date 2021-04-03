@@ -1,3 +1,5 @@
+import nodes.*;
+
 import java.util.ArrayList;
 
 public class Quadruplets {
@@ -18,7 +20,7 @@ public class Quadruplets {
         this.quadruplets.add(quad);
     }
 
-    public void addQuad(String operateur, String operande1, String operande2, String resultats){
+    public void addQuad(String operateur, Node operande1, Node operande2, Node resultats){
         this.quadruplets.add(new QuadElement(operateur, operande1, operande2, resultats, this.number_quadruplets));
         this.number_quadruplets++;
     }

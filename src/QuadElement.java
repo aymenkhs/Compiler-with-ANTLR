@@ -1,9 +1,12 @@
 
+import nodes.*;
+
 public class QuadElement {
-    private String operateur, operande1, operande2, resultats;
+    private String operateur;
+    private Node operande1, operande2, resultats;
     private int num;
 
-    public QuadElement(String operateur, String operande1, String operande2, String resultats, int num) {
+    public QuadElement(String operateur, Node operande1, Node operande2, Node resultats, int num) {
         this.operateur = operateur;
         this.operande1 = operande1;
         this.operande2 = operande2;
@@ -19,27 +22,27 @@ public class QuadElement {
         this.operateur = operateur;
     }
 
-    public String getOperande1() {
+    public Node getOperande1() {
         return operande1;
     }
 
-    public void setOperande1(String operande1) {
+    public void setOperande1(Node operande1) {
         this.operande1 = operande1;
     }
 
-    public String getOperande2() {
+    public Node getOperande2() {
         return operande2;
     }
 
-    public void setOperande2(String operande2) {
+    public void setOperande2(Node operande2) {
         this.operande2 = operande2;
     }
 
-    public String getResultats() {
+    public Node getResultats() {
         return resultats;
     }
 
-    public void setResultats(String resultats) {
+    public void setResultats(Node resultats) {
         this.resultats = resultats;
     }
 
