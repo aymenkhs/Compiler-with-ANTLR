@@ -21,13 +21,17 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
 
     @Override
     public Node visitAssignment(tiny_parserParser.AssignmentContext ctx) {
-        String idf = ctx.getChild(0).getText();
-        String var = ctx.getChild(2).getText();
+        Node operande;
+        IDF resultats = new IDF(ctx.getChild(0).getText());
 
+        if (ctx.STRING() != null){
+            operande = new ConstanteString("string", ctx.getChild(2).getText());
+        } else {
+            operande = visitOperation_mere(ctx.operation_mere());
+        }
 
-        visitChildren(ctx);
-        //System.out.println(idf + "=" + var);
-        return null;
+        QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande, null, resultats);
+        return quad.getResultats();
     }
 
     @Override
@@ -37,7 +41,6 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
             Node operande1 = visitOperation_mere(ctx.operation_mere());
             Node operande2 = visitOperation_fils(ctx.operation_fils());
             QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, new Temporaire());
-            System.out.println(quad);
             return quad.getResultats();
         } else {
             return visitChildren(ctx);
@@ -51,7 +54,6 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
             Node operande1 = visitOperation_fils(ctx.operation_fils());
             Node operande2 = visitOperation_gf(ctx.operation_gf());
             QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, new Temporaire());
-            System.out.println(quad);
             return quad.getResultats();
         } else {
             return visitChildren(ctx);
@@ -65,7 +67,6 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         if (ctx.operation_gf() != null){
             Node operande1 = visitOperation_gf(ctx.operation_gf());
             QuadElement quad = quadruplets.addQuad(ctx.getChild(0).getText(), operande1, null, new Temporaire());
-            System.out.println(quad);
             return quad.getResultats();
         } else if (ctx.operation_mere() != null){
             return visitOperation_mere(ctx.operation_mere());
