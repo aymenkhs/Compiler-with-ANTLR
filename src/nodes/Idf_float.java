@@ -1,3 +1,5 @@
+package nodes;
+
 public class Idf_float extends IDF{
 
     private float value;

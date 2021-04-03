@@ -1,3 +1,5 @@
+package nodes;
+
 public class Idf_int extends IDF {
 
     private int value;

@@ -1,4 +1,6 @@
-public abstract class IDF {
+package nodes;
+
+public class IDF {
 
     private String type;
     private String name;

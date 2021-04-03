@@ -1,3 +1,5 @@
+package nodes;
+
 public class Idf_String extends IDF{
 
     private String value;
