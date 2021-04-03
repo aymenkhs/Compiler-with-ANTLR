@@ -36,6 +36,20 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
     }
 
     @Override
+    public Node visitCondition(tiny_parserParser.ConditionContext ctx) {
+        Node operande1 = visitOperation_mere(ctx.operation_mere().get(0));
+        Node operande2 = visitOperation_mere(ctx.operation_mere().get(1));
+        Temporaire results = new Temporaire();
+        QuadElement quadCond = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, null);
+        quadruplets.addQuad("=", new ConstanteBoolean("bool", false), null, results);
+        QuadElement quadBR = quadruplets.addQuad("BR", null, null, null);
+        QuadElement quadFinCond = quadruplets.addQuad("=", null, null, results);
+        quadCond.setResultats(new AdresseQuad(quadFinCond.getNum()));
+        quadBR.setResultats(new AdresseQuad(quadFinCond.getNum()+1));
+        return results;
+    }
+
+    @Override
     public Node visitOperation_mere(tiny_parserParser.Operation_mereContext ctx) {
 
         if (ctx.operation_mere() != null){
@@ -114,9 +128,9 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
 
     @Override
     public Node visitIf_statement(tiny_parserParser.If_statementContext ctx) {
-        ConstanteBoolean resultCond = (ConstanteBoolean) visitCondition(ctx.condition());
+        Node resultCond = visitCondition(ctx.condition());
 
-        QuadElement quadIF = quadruplets.addQuad("BZ", null, null, resultCond);
+        QuadElement quadIF = quadruplets.addQuad("BZ", resultCond, null, null);
         // we'll store this quad then we'll put the adresse of the jump in the operande 2
 
         if (!ctx.else_if().isEmpty()){

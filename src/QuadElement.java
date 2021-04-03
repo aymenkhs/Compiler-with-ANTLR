@@ -46,9 +46,13 @@ public class QuadElement {
         this.resultats = resultats;
     }
 
+    public int getNum() {
+        return num;
+    }
+
     @Override
     public String toString() {
-        return "(" + operateur + "," + operande1 + "," + operande2 + "," + resultats + ")";
+        return num + ": (" + operateur + "," + operande1 + "," + operande2 + "," + resultats + ")";
     }
 
 }
