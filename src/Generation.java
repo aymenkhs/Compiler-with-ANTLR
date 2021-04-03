@@ -111,4 +111,24 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         QuadElement quad = quadruplets.addQuad("scan", null, null, idf);
         return quad.getResultats();
     }
+
+    @Override
+    public Node visitIf_statement(tiny_parserParser.If_statementContext ctx) {
+        ConstanteBoolean resultCond = (ConstanteBoolean) visitCondition(ctx.condition());
+
+        QuadElement quadIF = quadruplets.addQuad("BZ", null, null, resultCond);
+        // we'll store this quad then we'll put the adresse of the jump in the operande 2
+
+        if (!ctx.else_if().isEmpty()){
+            // get the number of else if
+            System.out.println( "there is at least one else if" );
+        }
+
+        if (ctx.else_statement() != null){
+            // we treate the else
+            System.out.println( "there is an else" );
+        }
+
+        return null;
+    }
 }
