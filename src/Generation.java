@@ -1,64 +1,61 @@
-import generated_files.tiny_parserParser;
 
-import generated_files.tiny_parserBaseVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.lang.Integer;
+import generated_files.tiny_parserParser;
+import generated_files.tiny_parserBaseVisitor;
 
+import nodes.*;
 
-public class Generation extends tiny_parserBaseVisitor<String> {
+public class Generation extends tiny_parserBaseVisitor<Node> {
 
     private Quadruplets quadruplets;
 
-    private int compteur;
+    public Generation() {
+        super();
+        this.quadruplets = new Quadruplets();
+    }
 
-    @Override
-    public String visitAssignment(tiny_parserParser.AssignmentContext ctx) {
-        String idf = ctx.getChild(0).getText();
-        String var = ctx.getChild(2).getText();
-
-
-        visitChildren(ctx);
-        //System.out.println(idf + "=" + var);
-        return null;
+    public Quadruplets getQuadruplets() {
+        return quadruplets;
     }
 
     @Override
-    public String visitOperation_mere(tiny_parserParser.Operation_mereContext ctx) {
-        /* Integer T =  super.visitOperation_mere(ctx);
-        if (ctx.children.size() == 3){
-            System.out.println("cas 1 :\n\topeartion 1: " + ctx.getChild(0).getText() + "\n\topeartion 2: " + ctx.getChild(1).getText() + "\n\topeartion 3: "  + ctx.getChild(2).getText());
-        } else if (ctx.children.size() == 2){
-            System.out.println("cas 2 :\n\topeartion 1: " + ctx.getChild(0).getText() + "\n\topeartion 2: " + ctx.getChild(1).getText());
+    public Node visitAssignment(tiny_parserParser.AssignmentContext ctx) {
+        Node operande;
+        IDF resultats = new IDF(ctx.getChild(0).getText());
+
+        if (ctx.STRING() != null){
+            operande = new ConstanteString("string", ctx.getChild(2).getText());
+        } else {
+            operande = visitOperation_mere(ctx.operation_mere());
         }
-        */
+
+        QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande, null, resultats);
+        quad = quadruplets.optimizeLastAssignement();
+        return quad.getResultats();
+    }
+
+    @Override
+    public Node visitOperation_mere(tiny_parserParser.Operation_mereContext ctx) {
 
         if (ctx.operation_mere() != null){
-            String temp1 = visitOperation_mere(ctx.operation_mere());
-            String temp2 = visitOperation_fils(ctx.operation_fils());
-            System.out.println("(" + ctx.getChild(1).getText() + ", " + temp1 + ", " + temp2 + ", T" + compteur + ")" );
-            compteur++;
-            return "T" + (compteur-1);
+            Node operande1 = visitOperation_mere(ctx.operation_mere());
+            Node operande2 = visitOperation_fils(ctx.operation_fils());
+            QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, new Temporaire());
+            return quad.getResultats();
         } else {
             return visitChildren(ctx);
         }
     }
 
     @Override
-    public String visitOperation_fils(tiny_parserParser.Operation_filsContext ctx) {
-        /*
-        super.visitOperation_fils(ctx);
-
-        if (ctx.children.size() == 3){
-            System.out.println("cas 3 :\n\topeartion 1: " + ctx.getChild(0).getText() + "\n\topeartion 2: " + ctx.getChild(1).getText() + "\n\topeartion 3: "  + ctx.getChild(2).getText());
-        }*/
+    public Node visitOperation_fils(tiny_parserParser.Operation_filsContext ctx) {
 
         if (ctx.operation_fils() != null){
-            String temp1 = visitOperation_fils(ctx.operation_fils());
-            String temp2 = visitOperation_gf(ctx.operation_gf());
-            System.out.println("(" + ctx.getChild(1).getText() + ", " + temp1 + ", " + temp2 + ", T" + compteur + ")" );
-            compteur++;
-            return "T" + (compteur-1);
+            Node operande1 = visitOperation_fils(ctx.operation_fils());
+            Node operande2 = visitOperation_gf(ctx.operation_gf());
+            QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, new Temporaire());
+            return quad.getResultats();
         } else {
             return visitChildren(ctx);
         }
@@ -66,19 +63,12 @@ public class Generation extends tiny_parserBaseVisitor<String> {
     }
 
     @Override
-    public String visitOperation_gf(tiny_parserParser.Operation_gfContext ctx) {
-        /*Integer T =  super.visitOperation_gf(ctx);
-        if (ctx.children.size() == 3){
-            System.out.println("cas 4 :\n\topeartion 1: " + ctx.getChild(0).getText() + "\n\topeartion 2: " + ctx.getChild(1).getText() + "\n\topeartion 3: "  + ctx.getChild(2).getText());
-        } else if (ctx.children.size() == 2){
-            System.out.println("cas 5 :\n\topeartion 1: " + ctx.getChild(0).getText() + "\n\topeartion 2: " + ctx.getChild(1).getText());
-        }*/
+    public Node visitOperation_gf(tiny_parserParser.Operation_gfContext ctx) {
 
         if (ctx.operation_gf() != null){
-            String temp = visitOperation_gf(ctx.operation_gf());
-            System.out.println("(" + ctx.getChild(0).getText() + " ," + temp + " , , T" + compteur + ")" );
-            compteur++;
-            return "T" + (compteur-1);
+            Node operande1 = visitOperation_gf(ctx.operation_gf());
+            QuadElement quad = quadruplets.addQuad(ctx.getChild(0).getText(), operande1, null, new Temporaire());
+            return quad.getResultats();
         } else if (ctx.operation_mere() != null){
             return visitOperation_mere(ctx.operation_mere());
         } else {
@@ -87,11 +77,15 @@ public class Generation extends tiny_parserBaseVisitor<String> {
     }
 
     @Override
-    public String visitOperande(tiny_parserParser.OperandeContext ctx) {
-        /*Integer T =  super.visitOperande(ctx);
-        System.out.println("cas 6 :" + ctx.getChild(0).getText());
-        */
-        return ctx.getChild(0).getText();
+    public Node visitOperande(tiny_parserParser.OperandeContext ctx) {
+
+        if(ctx.IDF() != null){
+            return new IDF(ctx.getChild(0).getText());
+        } else if (ctx.INTEGER() != null){
+            return new ConstanteInteger("int", Integer.parseInt(ctx.getChild(0).getText()));
+        } else {
+            return new ConstanteReal("real", Float.parseFloat(ctx.getChild(0).getText()));
+        }
     }
 
 

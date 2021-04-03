@@ -1,12 +1,16 @@
 package nodes;
 
-public class IDF {
+public class IDF extends Node{
 
     private String type;
     private String name;
 
     public IDF(String type, String name) {
         this.type = type;
+        this.name = name;
+    }
+
+    public IDF(String name) {
         this.name = name;
     }
 
@@ -28,9 +32,6 @@ public class IDF {
 
     @Override
     public String toString() {
-        return "IDF{" +
-                "type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }

@@ -21,6 +21,15 @@ public class Launch {
             visitor.visitProgram(tree);
             System.out.println(visitor.getSemanticErrors());
             System.out.println(visitor.getSymbol_table());
+
+            Generation visitorQuad = new Generation();
+            visitorQuad.visitProgram(tree);
+            Quadruplets quadruplets = visitorQuad.getQuadruplets();
+
+            for(int i=0; i< quadruplets.size(); i++){
+                System.out.println(quadruplets.getQuad(i));
+            }
+
         }catch (IOException e){
             e.printStackTrace();
         }
