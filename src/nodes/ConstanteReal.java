@@ -12,4 +12,9 @@ public class ConstanteReal extends Constante{
     public Float getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return value + "";
+    }
 }

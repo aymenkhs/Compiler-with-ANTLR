@@ -12,4 +12,9 @@ public class ConstanteInteger extends Constante{
     public Integer getValue() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return value + "";
+    }
 }
