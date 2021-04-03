@@ -17,4 +17,8 @@ public class Temporaire extends Node{
     public String toString() {
         return "T" + num;
     }
+
+    public static void deleteLastTemp(){
+        nbTemp--;
+    }
 }

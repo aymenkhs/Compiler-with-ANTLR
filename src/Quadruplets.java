@@ -6,14 +6,12 @@ public class Quadruplets {
 
     private ArrayList<QuadElement> quadruplets;
 
-    private int tempraires;
     private int number_quadruplets;
 
 
     public Quadruplets(){
         this.quadruplets = new ArrayList<QuadElement>();
         this.number_quadruplets = 0;
-        this.tempraires = 0;
     }
 
     public void addQuad(QuadElement quad){
@@ -33,5 +31,22 @@ public class Quadruplets {
 
     public int size(){
         return this.quadruplets.size();
+    }
+
+    public QuadElement optimizeLastAssignement(){
+        QuadElement quad = quadruplets.get(this.number_quadruplets-1);
+        if (quad.getOperateur().equals("=") && this.number_quadruplets > 1){
+            QuadElement quad2 = quadruplets.get(this.number_quadruplets-2);
+            if (quad2.getResultats() instanceof Temporaire && quad2.getResultats() == quad.getOperande1()){
+                // alors on mets l'affectation dans le precedant quadruplets
+                quad2.setResultats(quad.getResultats());
+                // on supprime le dernier quadruplets et le temporraire assosier
+                Temporaire.deleteLastTemp();
+                quadruplets.remove(this.number_quadruplets-1);
+                this.number_quadruplets--;
+                return quad2;
+            }
+        }
+        return quad;
     }
 }

@@ -31,6 +31,7 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         }
 
         QuadElement quad = quadruplets.addQuad(ctx.getChild(1).getText(), operande, null, resultats);
+        quad = quadruplets.optimizeLastAssignement();
         return quad.getResultats();
     }
 
