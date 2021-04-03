@@ -34,8 +34,8 @@ public class Generation extends tiny_parserBaseVisitor<String> {
         */
 
         if (ctx.operation_mere() != null){
-            String temp1 = visitOperation_fils(ctx.operation_fils());
-            String temp2 = visitOperation_mere(ctx.operation_mere());
+            String temp1 = visitOperation_mere(ctx.operation_mere());
+            String temp2 = visitOperation_fils(ctx.operation_fils());
             System.out.println("(" + ctx.getChild(1).getText() + ", " + temp1 + ", " + temp2 + ", T" + compteur + ")" );
             compteur++;
             return "T" + (compteur-1);
@@ -54,8 +54,8 @@ public class Generation extends tiny_parserBaseVisitor<String> {
         }*/
 
         if (ctx.operation_fils() != null){
-            String temp1 = visitOperation_gf(ctx.operation_gf());
-            String temp2 = visitOperation_fils(ctx.operation_fils());
+            String temp1 = visitOperation_fils(ctx.operation_fils());
+            String temp2 = visitOperation_gf(ctx.operation_gf());
             System.out.println("(" + ctx.getChild(1).getText() + ", " + temp1 + ", " + temp2 + ", T" + compteur + ")" );
             compteur++;
             return "T" + (compteur-1);
