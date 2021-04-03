@@ -12,4 +12,8 @@ public class AdresseQuad extends Node{
     public String toString() {
         return "@" + adresse;
     }
+
+    public void decrementAdresse() {
+        adresse--;
+    }
 }

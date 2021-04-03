@@ -6,6 +6,8 @@ import generated_files.tiny_parserBaseVisitor;
 
 import nodes.*;
 
+import java.util.ArrayList;
+
 public class Generation extends tiny_parserBaseVisitor<Node> {
 
     private Quadruplets quadruplets;
@@ -128,21 +130,55 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
 
     @Override
     public Node visitIf_statement(tiny_parserParser.If_statementContext ctx) {
+        AdresseQuad addresseLastBZ = null;
+        AdresseQuad adresseFinIF;
+        ArrayList<QuadElement> else_ifELements = new ArrayList<>();
+
         Node resultCond = visitCondition(ctx.condition());
 
         QuadElement quadIF = quadruplets.addQuad("BZ", resultCond, null, null);
-        // we'll store this quad then we'll put the adresse of the jump in the operande 2
 
-        if (!ctx.else_if().isEmpty()){
-            // get the number of else if
-            System.out.println( "there is at least one else if" );
-        }
+        visitThen(ctx.then());
 
-        if (ctx.else_statement() != null){
-            // we treate the else
-            System.out.println( "there is an else" );
+        if (ctx.else_if().isEmpty() && ctx.else_statement() == null){
+            quadIF.setResultats(new AdresseQuad(quadruplets.size()));
+        } else {
+            quadIF.setResultats(new AdresseQuad(quadruplets.size()+1));
+            QuadElement QuadENDIF = quadruplets.addQuad("BR", null, null, null);
+            for (tiny_parserParser.Else_ifContext elseIF : ctx.else_if()){
+                addresseLastBZ = (AdresseQuad) visitElse_if(elseIF);
+                else_ifELements.add(quadruplets.addQuad("BR", null, null, null));
+            }
+
+            if (ctx.else_statement() != null){
+                visitElse_statement(ctx.else_statement());
+                adresseFinIF = new AdresseQuad(quadruplets.size());
+            } else {
+                quadruplets.removeLastBR();
+                adresseFinIF = new AdresseQuad(quadruplets.size());
+                
+                if(!ctx.else_if().isEmpty()){
+                    addresseLastBZ.decrementAdresse();
+                }
+                
+            }
+
+            QuadENDIF.setResultats(adresseFinIF);
+            for (QuadElement quad: else_ifELements){
+                quad.setResultats(adresseFinIF);
+            }
         }
 
         return null;
     }
+
+    @Override
+    public Node visitElse_if(tiny_parserParser.Else_ifContext ctx) {
+        Node resultCond = visitCondition(ctx.condition());
+        QuadElement quadIF = quadruplets.addQuad("BZ", resultCond, null, null);
+        visitThen(ctx.then());
+        quadIF.setResultats(new AdresseQuad(quadruplets.size()+1));
+        return quadIF.getResultats();
+    }
+
 }
