@@ -1,10 +1,10 @@
-import generated_files.tiny_parserParser;
 
-import generated_files.tiny_parserBaseVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.lang.Integer;
+import generated_files.tiny_parserParser;
+import generated_files.tiny_parserBaseVisitor;
 
+import nodes.*;
 
 public class Generation extends tiny_parserBaseVisitor<String> {
 
