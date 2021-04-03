@@ -88,6 +88,27 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         }
     }
 
+    @Override
+    public Node visitPrint(tiny_parserParser.PrintContext ctx) {
+        Node operande = visitPrintcontent(ctx.printcontent());
+        QuadElement quad = quadruplets.addQuad("print", null, null, operande);
+        return quad.getResultats();
+    }
 
+    @Override
+    public Node visitPrintcontent(tiny_parserParser.PrintcontentContext ctx) {
+        if (ctx.STRING() != null){
+            return new ConstanteString("string", ctx.getChild(2).getText());
+        } else {
+            Node n =  visitOperation_mere(ctx.operation_mere());
+            return n;
+        }
+    }
 
+    @Override
+    public Node visitScan(tiny_parserParser.ScanContext ctx) {
+        IDF idf = new IDF(ctx.getChild(2).getText());
+        QuadElement quad = quadruplets.addQuad("scan", null, null, idf);
+        return quad.getResultats();
+    }
 }
