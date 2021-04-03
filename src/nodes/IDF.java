@@ -32,9 +32,6 @@ public class IDF extends Node{
 
     @Override
     public String toString() {
-        return "IDF{" +
-                "type='" + type + '\'' +
-                ", name='" + name + '\'' +
-                '}';
+        return name;
     }
 }
