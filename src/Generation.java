@@ -7,9 +7,12 @@ import generated_files.tiny_parserBaseVisitor;
 import nodes.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Stack;
 
 public class Generation extends tiny_parserBaseVisitor<Node> {
+
+    private static HashMap<String,String> comparators;
 
     private Quadruplets quadruplets;
 
@@ -46,7 +49,9 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         Node operande1 = visitOperation_mere(ctx.operation_mere().get(0));
         Node operande2 = visitOperation_mere(ctx.operation_mere().get(1));
         Temporaire results = new Temporaire();
-        QuadElement quadCond = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, null);
+        String operateur = Generation.comparators.get(ctx.getChild(1).getText());
+
+        QuadElement quadCond = quadruplets.addQuad(operateur, operande1, operande2, null);
         quadruplets.addQuad("=", new ConstanteBoolean("bool", false), null, results);
         QuadElement quadBR = quadruplets.addQuad("BR", null, null, null);
         QuadElement quadFinCond = quadruplets.addQuad("=", new ConstanteBoolean("bool", true), null, results);
@@ -194,4 +199,15 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         return null;
     }
 
+
+    public static void initComparators(){
+        comparators = new HashMap<>();
+        comparators.put("==", "BE");
+        comparators.put("!=", "BNE");
+        comparators.put("<>", "BNE");
+        comparators.put(">=", "BGE");
+        comparators.put(">", "BG");
+        comparators.put("<=", "BLE");
+        comparators.put("<", "BL");
+    }
 }

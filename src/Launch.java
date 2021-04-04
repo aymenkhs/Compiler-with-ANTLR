@@ -23,6 +23,7 @@ public class Launch {
             System.out.println(visitor.getSymbol_table());
 
             Generation visitorQuad = new Generation();
+            Generation.initComparators();
             visitorQuad.visitProgram(tree);
             Quadruplets quadruplets = visitorQuad.getQuadruplets();
 
