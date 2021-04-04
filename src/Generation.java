@@ -7,14 +7,18 @@ import generated_files.tiny_parserBaseVisitor;
 import nodes.*;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Generation extends tiny_parserBaseVisitor<Node> {
 
     private Quadruplets quadruplets;
 
+    private Stack<AdresseQuad> do_while_LIFO;
+
     public Generation() {
         super();
         this.quadruplets = new Quadruplets();
+        this.do_while_LIFO = new Stack<>();
     }
 
     public Quadruplets getQuadruplets() {
@@ -179,6 +183,15 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         visitThen(ctx.then());
         quadIF.setResultats(new AdresseQuad(quadruplets.size()+1));
         return quadIF.getResultats();
+    }
+
+    @Override
+    public Node visitDo_while(tiny_parserParser.Do_whileContext ctx) {
+        do_while_LIFO.push(new AdresseQuad(quadruplets.size()));
+        visitInstructions(ctx.instructions());
+        Node resultCond = visitCondition(ctx.condition());
+        quadruplets.addQuad("BNZ", resultCond, null, do_while_LIFO.pop());
+        return null;
     }
 
 }
