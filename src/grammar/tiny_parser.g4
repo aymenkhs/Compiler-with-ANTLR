@@ -32,7 +32,7 @@ operande: IDF | INTEGER | REAL;
 
 // print statement
 print: 'printCompil' '(' printcontent ')' ';';
-printcontent: operation_mere|STRING|IDF; // it may be a STRING, an idf ,an integer or a float
+printcontent: operation_mere|STRING; // it may be a STRING, an idf ,an integer or a float
 
 // scan statement
 scan: 'scanCompil' '(' IDF ')' ';'; // we'll implement multiple idf's in a scan statement later

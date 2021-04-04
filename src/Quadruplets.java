@@ -49,4 +49,12 @@ public class Quadruplets {
         }
         return quad;
     }
+
+    public void removeLastBR(){
+        QuadElement quad = quadruplets.get(this.number_quadruplets-1);
+        if (quad.getOperateur().equals("BR")){
+            quadruplets.remove(this.number_quadruplets-1);
+            this.number_quadruplets--;
+        }
+    }
 }
