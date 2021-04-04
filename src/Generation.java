@@ -49,7 +49,7 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         QuadElement quadCond = quadruplets.addQuad(ctx.getChild(1).getText(), operande1, operande2, null);
         quadruplets.addQuad("=", new ConstanteBoolean("bool", false), null, results);
         QuadElement quadBR = quadruplets.addQuad("BR", null, null, null);
-        QuadElement quadFinCond = quadruplets.addQuad("=", null, null, results);
+        QuadElement quadFinCond = quadruplets.addQuad("=", new ConstanteBoolean("bool", true), null, results);
         quadCond.setResultats(new AdresseQuad(quadFinCond.getNum()));
         quadBR.setResultats(new AdresseQuad(quadFinCond.getNum()+1));
         return results;
