@@ -20,7 +20,7 @@ public class Launch {
             AntlerToExp visitor= new AntlerToExp();
             visitor.visitProgram(tree);
             System.out.println(visitor.getSemanticErrors());
-            System.out.println(visitor.getSymbol_table());
+            System.out.println(visitor.getSemantic_table().getSymbol_table());
 
             Generation visitorQuad = new Generation();
             Generation.initComparators();

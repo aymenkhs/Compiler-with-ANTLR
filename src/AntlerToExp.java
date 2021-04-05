@@ -6,27 +6,19 @@ import generated_files.*;
 import nodes.*;
 
 public class AntlerToExp extends tiny_parserBaseVisitor {
-
-     private ArrayList<String> vars;
+     private Semantic_Table semantic_table;
      private ArrayList<String> semanticErrors;
-     private ArrayList<IDF> symbol_table;
-
-    public ArrayList<String> getVars() {
-        return vars;
-    }
 
     public ArrayList<String> getSemanticErrors() {
         return semanticErrors;
     }
 
-    public ArrayList<IDF> getSymbol_table() {
-        return symbol_table;
+    public Semantic_Table getSemantic_table() {
+        return semantic_table;
     }
 
     public AntlerToExp() {
-        this.vars = new ArrayList<String>();
         this.semanticErrors = new ArrayList<String>();
-        this.symbol_table =new ArrayList<IDF>();
     }
 
     public IDF chose_type(String type,String name){
@@ -70,12 +62,12 @@ public class AntlerToExp extends tiny_parserBaseVisitor {
         for(int i=0;i<array.length;i++){
             IDF var=chose_type(type,array[i]);
 
-            if(vars.contains(var.getName())){
+            if(semantic_table.containsVar(var.getName())){
                 semanticErrors.add("variable : "+var.getName()+" ALRDY DEClARED! at line "+line+" column "+column);
             }
             else {
-                vars.add(var.getName());
-                symbol_table.add(var);
+                semantic_table.addVar(var);
+                var.makeDeclared();
             }
         }
 

@@ -1,9 +1,11 @@
 package nodes;
 
-public class IDF extends Node{
+public abstract class IDF extends Node{
 
     private String type;
     private String name;
+    private Boolean declared=false;
+    private Boolean said=false;
 
     public IDF(String type, String name) {
         this.type = type;
@@ -26,9 +28,23 @@ public class IDF extends Node{
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Boolean getSaid() {
+        return said;
     }
+
+    public Boolean getDeclared() {
+        return declared;
+    }
+
+    public void makeDeclared(){
+        declared=true;
+    }
+
+    public void makeSaid(){
+        said=true;
+    }
+
+    public abstract void setValue(Object o);
 
     @Override
     public String toString() {

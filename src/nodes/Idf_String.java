@@ -18,8 +18,13 @@ public class Idf_String extends IDF{
     }
 
     @Override
+    public void setValue(Object o) {
+        this.value = (String) o;
+    }
+
+    @Override
     public String toString() {
-        return super.toString()+"Idf_String{" +
+        return super.toString()+"  Idf_String{" +
                 "value='" + value + '\'' +
                 '}';
     }

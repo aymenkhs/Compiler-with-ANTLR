@@ -17,8 +17,13 @@ public class Idf_int extends IDF {
     }
 
     @Override
+    public void setValue(Object o) {
+        this.value = (int) o;
+    }
+
+    @Override
     public String toString() {
-        return super.toString()+"Idf_int{" +
+        return super.toString()+"  Idf_int{" +
                 "value=" + value +
                 '}';
     }

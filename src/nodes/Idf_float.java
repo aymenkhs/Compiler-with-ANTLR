@@ -12,13 +12,15 @@ public class Idf_float extends IDF{
         return value;
     }
 
-    public void setValue(float value) {
-        this.value = value;
+
+    @Override
+    public void setValue(Object o) {
+        this.value = (float) o;
     }
 
     @Override
     public String toString() {
-        return super.toString()+"Idf_float{" +
+        return super.toString()+"   Idf_float{" +
                 "value=" + value +
                 '}';
     }
