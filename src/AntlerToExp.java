@@ -6,14 +6,14 @@ import generated_files.*;
 import nodes.*;
 
 public class AntlerToExp extends tiny_parserBaseVisitor {
-     private Semantic_Table semantic_table;
+     private SemanticTable semantic_table;
      private ArrayList<String> semanticErrors;
 
     public ArrayList<String> getSemanticErrors() {
         return semanticErrors;
     }
 
-    public Semantic_Table getSemantic_table() {
+    public SemanticTable getSemantic_table() {
         return semantic_table;
     }
 

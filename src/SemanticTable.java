@@ -1,12 +1,12 @@
-package nodes;
+import nodes.*;
 
 import java.util.ArrayList;
 
-public class Semantic_Table {
+public class SemanticTable {
 
     private ArrayList<IDF> symbol_table;
 
-    public Semantic_Table() {
+    public SemanticTable() {
         this.symbol_table =new ArrayList<IDF>();
     }
 
