@@ -6,20 +6,24 @@ import generated_files.*;
 import nodes.*;
 
 public class AntlerToExp extends tiny_parserBaseVisitor {
-     private SemanticTable semantic_table;
-     private ArrayList<String> semanticErrors;
+    private SymbolesTable semantic_table;
+    private ArrayList<String> semanticErrors;
+
+
+    public AntlerToExp() {
+        this.semantic_table = new SymbolesTable();
+        this.semanticErrors = new ArrayList<String>();
+    }
+
 
     public ArrayList<String> getSemanticErrors() {
         return semanticErrors;
     }
 
-    public SemanticTable getSemantic_table() {
+    public SymbolesTable getSemantic_table() {
         return semantic_table;
     }
 
-    public AntlerToExp() {
-        this.semanticErrors = new ArrayList<String>();
-    }
 
     public IDF chose_type(String type,String name){
         if(type.equals("intCompil")){
