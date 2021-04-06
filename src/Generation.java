@@ -31,7 +31,7 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
     @Override
     public Node visitAssignment(tiny_parserParser.AssignmentContext ctx) {
         Node operande;
-        IDF resultats = new IDF(ctx.getChild(0).getText());
+        IdfQuad resultats = new IdfQuad(ctx.getChild(0).getText());
 
         if (ctx.STRING() != null){
             operande = new ConstanteString("string", ctx.getChild(2).getText());
@@ -105,7 +105,7 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
     public Node visitOperande(tiny_parserParser.OperandeContext ctx) {
 
         if(ctx.IDF() != null){
-            return new IDF(ctx.getChild(0).getText());
+            return new IdfQuad(ctx.getChild(0).getText());
         } else if (ctx.INTEGER() != null){
             return new ConstanteInteger("int", Integer.parseInt(ctx.getChild(0).getText()));
         } else {
@@ -132,8 +132,8 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
 
     @Override
     public Node visitScan(tiny_parserParser.ScanContext ctx) {
-        IDF idf = new IDF(ctx.getChild(2).getText());
-        QuadElement quad = quadruplets.addQuad("scan", null, null, idf);
+        IDF IdfQuad = new IdfQuad(ctx.getChild(2).getText());
+        QuadElement quad = quadruplets.addQuad("scan", null, null, IdfQuad);
         return quad.getResultats();
     }
 
