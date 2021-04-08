@@ -224,5 +224,16 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
             return new ConstanteReal();
         }
     }
+
+    @Override
+    public Node visitScan(tiny_parserParser.ScanContext ctx) {
+
+        Token idToken = ctx.IDF().getSymbol();
+        int row = idToken.getLine();
+        int column = idToken.getCharPositionInLine();
+        String idf_name = ctx.IDF().getText();
+
+        return check_declarer(idf_name, row, column);
+    }
 }
 
