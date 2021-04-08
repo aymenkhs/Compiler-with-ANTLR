@@ -35,24 +35,39 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
         }
     }
 
+
     @Override
     public Node visitAssignment(tiny_parserParser.AssignmentContext ctx) {
 
         Token idToken = ctx.IDF().getSymbol();
-        int line = idToken.getLine();
+        int row = idToken.getLine();
         int column = idToken.getCharPositionInLine();
+        String idf_name = ctx.IDF().getText();
 
         /*  we check if the idf exist, and return the IDF (we create a new one with the declared=false if it doesn't exist */
-        IDF resultats = check_declarer(ctx.IDF().getText(), line, column);
+        IDF resultats = check_declarer(idf_name, row, column);
+        // if the result idf is undeclared in the first place we don't have to check all types errors in the assignement
 
-        Node operande;
+        if (resultats.isDeclared()){
+            if (ctx.STRING() != null){
+                // if the son is a String we check if the idf is a string
+                if (!resultats.getType().equals("StringCompil")){
+                    semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " et colones " +
+                            column + " se voit assigner un StringCompil alors qu'il est de type " + resultats.getType());
+                }
+            } else {
+            /*  if it's not a string...
+                the possibilities are:
+                    - an IDF in which case we compare the type of the operande with the result
+                    - an int in which case we check that the type of the result is int
+                    - a float in which case we check that the type of the result is a float
+            */
+                Node operande = visitOperation_mere(ctx.operation_mere());
 
-        if (ctx.STRING() != null){
-            // if the son is a String we check if the idf is a string
+            }
         } else {
-            // if not... the possibilities are, (an IDF in which case we check the types) an int or a float in each case we check the types
+            visitChildren(ctx);
         }
-
-        return resultats;
+        return null;
     }
 }
