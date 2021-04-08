@@ -66,8 +66,7 @@ public class AntlerToExp extends tiny_parserBaseVisitor {
                 semanticErrors.add("variable : "+var.getName()+" ALRDY DEClARED! at line "+line+" column "+column);
             }
             else {
-                semantic_table.addVar(var);
-                var.makeDeclared();
+                semantic_table.addDeclaredVar(var);
             }
         }
 
