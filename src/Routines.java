@@ -56,14 +56,44 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
                             column + " se voit assigner un StringCompil alors qu'il est de type " + resultats.getType());
                 }
             } else {
-            /*  if it's not a string...
-                the possibilities are:
-                    - an IDF in which case we compare the type of the operande with the result
-                    - an int in which case we check that the type of the result is int
-                    - a float in which case we check that the type of the result is a float
-            */
-                Node operande = visitOperation_mere(ctx.operation_mere());
+                /*  if it's not a string...
+                    the possibilities are:
+                        - an IDF in which case we compare the type of the operande with the result
+                        - an int in which case we check that the type of the result is int
+                        - a float in which case we check that the type of the result is a float
+                */
 
+
+                Node operande = visitOperation_mere(ctx.operation_mere());
+                /*  visitOperation_mere vas retourner un fils de nodes, qui sera soit:
+                        - un IDF_Int ou IDF_Float ou IDF_String dans le cas ou il n'y a pas d'operation
+                        - un ConstanteInteger ou ConstanteReal dan le cas d'une operation ou d'assignement a une constante
+
+                    donc on verifie la classe de la valleur retourner et on la compare avec le type du resultats de l'operation
+
+                    Si le type du resultats de l'operarion est un String on s'attend a un IDF String
+                    Si le type du resultats de l'operarion est un Int on s'attend a un IDF ou Constante Int
+                    Si le type du resultats de l'operarion est un Float on verifie uniquement qu'il ne s'aggit pas d'un idf de type String
+
+                */
+
+                if (resultats.getType().equals("StringCompil")){
+                    // dans se cas le idf (resultats) est de type String et il doit recevoir un idf de type string
+
+                    if(!(operande instanceof Idf_String)){
+                        semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " doit etre assigner avec un String ");
+                    }
+                } else if (resultats.getType().equals("intCompil")){
+                    // dans se cas on auras un probleme dans le cas ou l'operande est un float ou un string
+                    if(!(operande instanceof Idf_int || operande instanceof ConstanteInteger)){
+                        semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " doit etre assigner avec un Entier ");
+                    }
+                } else {
+                    // dans se cas il s'aggit d'un float et le seul probleme est si on a un IDF (operande) String
+                    if(operande instanceof Idf_String){
+                        semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " est un floatCompil il ne peut pas prendre la valleur d'un StringCompil");
+                    }
+                }
             }
         } else {
             visitChildren(ctx);
