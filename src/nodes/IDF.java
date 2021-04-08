@@ -3,17 +3,18 @@ package nodes;
 public abstract class IDF extends Node{
 
     private String type;
-    private String name;
-    private Boolean declared=false;
-    private Boolean said=false;
+    private final String name;
+    private final Boolean declared;
 
     public IDF(String type, String name) {
         this.type = type;
         this.name = name;
+        this.declared = true;
     }
 
     public IDF(String name) {
         this.name = name;
+        this.declared = false;
     }
 
     public String getType() {
@@ -28,20 +29,8 @@ public abstract class IDF extends Node{
         return name;
     }
 
-    public Boolean getSaid() {
-        return said;
-    }
-
-    public Boolean getDeclared() {
+    public Boolean isDeclared() {
         return declared;
-    }
-
-    public void makeDeclared(){
-        declared=true;
-    }
-
-    public void makeSaid(){
-        said=true;
     }
 
     public abstract void setValue(Object o);
