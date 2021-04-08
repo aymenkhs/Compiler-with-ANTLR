@@ -9,6 +9,8 @@ public class ConstanteInteger extends Constante{
         this.value = value;
     }
 
+    public ConstanteInteger() {}
+
     public Integer getValue() {
         return value;
     }

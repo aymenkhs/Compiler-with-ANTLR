@@ -65,9 +65,15 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
 
                 Node operande = visitOperation_mere(ctx.operation_mere());
+
+                if (operande == null){
+                    return null;
+                }
+
                 /*  visitOperation_mere vas retourner un fils de nodes, qui sera soit:
                         - un IDF_Int ou IDF_Float ou IDF_String dans le cas ou il n'y a pas d'operation
                         - un ConstanteInteger ou ConstanteReal dan le cas d'une operation ou d'assignement a une constante
+                        - null dans le cas ou il y a un IDF de type String dans l'operation
 
                     donc on verifie la classe de la valleur retourner et on la compare avec le type du resultats de l'operation
 
@@ -100,4 +106,123 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
         }
         return null;
     }
+
+    @Override
+    public Node visitOperation_mere(tiny_parserParser.Operation_mereContext ctx) {
+
+        if (ctx.operation_mere() != null){
+            Node operande1 = visitOperation_mere(ctx.operation_mere());
+            Node operande2 = visitOperation_fils(ctx.operation_fils());
+            if (operande1 == null || operande2 == null){
+                return null;
+            }
+
+            if (operande1 instanceof Idf_String || operande2 instanceof Idf_String){
+                int row = ctx.start.getLine();
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                return null;
+            }
+
+            if (operande1 instanceof Idf_float || operande2 instanceof Idf_float || operande1 instanceof ConstanteReal
+                    || operande2 instanceof ConstanteReal){
+                return new ConstanteReal();
+            } else {
+                return new ConstanteInteger();
+            }
+
+        } else {
+            return visitChildren(ctx);
+        }
+    }
+
+    @Override
+    public Node visitOperation_fils(tiny_parserParser.Operation_filsContext ctx) {
+
+        if (ctx.operation_fils() != null){
+            Node operande1 = visitOperation_fils(ctx.operation_fils());
+            Node operande2 = visitOperation_gf(ctx.operation_gf());
+
+            if (operande1 == null || operande2 == null){
+                return null;
+            }
+
+            if (operande1 instanceof Idf_String || operande2 instanceof Idf_String){
+                int row = ctx.start.getLine();
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                return null;
+            }
+
+            if (ctx.DIV() != null){
+                return new ConstanteReal();
+            }
+
+            if (operande1 instanceof Idf_float || operande2 instanceof Idf_float || operande1 instanceof ConstanteReal
+                    || operande2 instanceof ConstanteReal){
+                return new ConstanteReal();
+            } else {
+                return new ConstanteInteger();
+            }
+        } else {
+            return visitChildren(ctx);
+        }
+
+    }
+
+    @Override
+    public Node visitOperation_gf(tiny_parserParser.Operation_gfContext ctx) {
+
+        if (ctx.operation_gf() != null){
+            Node node = visitOperation_gf(ctx.operation_gf());
+
+            if (node == null){
+                return null;
+            }
+
+            if(node instanceof Idf_String){
+                int row = ctx.start.getLine();
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                return null;
+            } else if (node instanceof Idf_int){
+                return new ConstanteInteger();
+            } else if (node instanceof Idf_float){
+                return new ConstanteReal();
+            }
+
+            return node;
+        } else if (ctx.operation_mere() != null){
+            Node node = visitOperation_mere(ctx.operation_mere());
+
+            if (node == null){
+                return null;
+            }
+
+            if(node instanceof Idf_String){
+                int row = ctx.start.getLine();
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                return null;
+            }
+
+            return node;
+        } else {
+            return visitOperande(ctx.operande());
+        }
+    }
+
+    @Override
+    public Node visitOperande(tiny_parserParser.OperandeContext ctx) {
+
+        if(ctx.IDF() != null){
+            Token idToken = ctx.IDF().getSymbol();
+            int row = idToken.getLine();
+            int column = idToken.getCharPositionInLine();
+            String idf_name = ctx.IDF().getText();
+
+            return check_declarer(idf_name, row, column);
+        } else if (ctx.INTEGER() != null){
+            return new ConstanteInteger();
+        } else {
+            return new ConstanteReal();
+        }
+    }
 }
+

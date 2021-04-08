@@ -9,6 +9,8 @@ public class ConstanteReal extends Constante{
         this.value = value;
     }
 
+    public ConstanteReal() {}
+
     public Float getValue() {
         return value;
     }
