@@ -1,10 +1,11 @@
 import nodes.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Quadruplets {
+public class Quadruplets implements Iterable<QuadElement>{
 
-    private ArrayList<QuadElement> quadruplets;
+    private final ArrayList<QuadElement> quadruplets;
 
     private int number_quadruplets;
 
@@ -56,5 +57,10 @@ public class Quadruplets {
             quadruplets.remove(this.number_quadruplets-1);
             this.number_quadruplets--;
         }
+    }
+
+    @Override
+    public Iterator<QuadElement> iterator() {
+        return quadruplets.iterator();
     }
 }

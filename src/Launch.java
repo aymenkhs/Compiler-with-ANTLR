@@ -30,8 +30,8 @@ public class Launch {
             visitorQuad.visitProgram(tree);
             Quadruplets quadruplets = visitorQuad.getQuadruplets();
 
-            for(int i=0; i< quadruplets.size(); i++){
-                System.out.println(quadruplets.getQuad(i));
+            for(QuadElement quad : quadruplets){
+                System.out.println(quad);
             }
 
         }catch (IOException e){
