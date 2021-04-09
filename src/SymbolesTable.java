@@ -11,6 +11,10 @@ public class SymbolesTable {
         this.unDeclaredVars =new ArrayList<IDF>();
     }
 
+    public ArrayList<IDF> getDeclaredVars() {
+        return declaredVars;
+    }
+
     public void addDeclaredVar(IDF idf){
         declaredVars.add(idf);
     }
