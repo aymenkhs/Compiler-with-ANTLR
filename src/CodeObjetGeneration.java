@@ -1,3 +1,4 @@
+import nodes.AdresseQuad;
 import nodes.IDF;
 
 import java.util.ArrayList;
@@ -7,6 +8,8 @@ public class CodeObjetGeneration {
     private SymbolesTable table_Symboles;
 
     private ArrayList<String> codeObjet;
+
+    private ArrayList<Integer> adresses;
 
     public CodeObjetGeneration(Quadruplets quadruplets, SymbolesTable table_Symboles) {
         this.quadruplets = quadruplets;
@@ -32,6 +35,11 @@ public class CodeObjetGeneration {
     public void operations(){
         // on parcours les quadruplets et on traduit en assembleur
         for( QuadElement quad : quadruplets){
+
+            if (adresses.contains(quad.getNum())){
+                codeObjet.add("Etiq@" + quad.getNum() + ":");
+            }
+
             switch(quad.getOperateur()) {
                 case "+":
                     codeObjet.add("MOV AX," + quad.getOperande1());
@@ -63,37 +71,61 @@ public class CodeObjetGeneration {
                     codeObjet.add("OUTPUT " + quad.getResultats());
                     break;
                 case "BR":
-                    // code block
+                    codeObjet.add("JMP Etiq" + quad.getResultats());
                     break;
                 case "BZ":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX,0");
+                    codeObjet.add("JZ Etiq" + quad.getResultats());
                     break;
                 case "BNZ":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX,0");
+                    codeObjet.add("JNZ Etiq" + quad.getResultats());
                     break;
                 case "BE":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX," + quad.getOperande2());
+                    codeObjet.add("JE Etiq" + quad.getResultats());
                     break;
                 case "BNE":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX," + quad.getOperande2());
+                    codeObjet.add("JNE Etiq" + quad.getResultats());
                     break;
                 case "BGE":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX," + quad.getOperande2());
+                    codeObjet.add("JGE Etiq" + quad.getResultats());
                     break;
                 case "BG":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX," + quad.getOperande2());
+                    codeObjet.add("JG Etiq" + quad.getResultats());
                     break;
                 case "BLE":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX," + quad.getOperande2());
+                    codeObjet.add("JLE Etiq" + quad.getResultats());
                     break;
                 case "BL":
-                    // code block
+                    codeObjet.add("MOV AX," + quad.getOperande1());
+                    codeObjet.add("CMP AX," + quad.getOperande2());
+                    codeObjet.add("JL Etiq" + quad.getResultats());
                     break;
                 default:
-                    // code block
+                    System.out.println("erreur dans la generation de code objet");
             }
         }
 
+    }
+
+    public void adressesEtiquetes(){
+        for(QuadElement quad : quadruplets){
+            if(quad.getResultats() instanceof AdresseQuad){
+                adresses.add(((AdresseQuad) quad.getResultats()).getAdresse());
+            }
+        }
     }
 
 }

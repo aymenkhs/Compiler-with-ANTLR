@@ -8,6 +8,10 @@ public class AdresseQuad extends Node{
         this.adresse = adresse;
     }
 
+    public int getAdresse() {
+        return adresse;
+    }
+
     @Override
     public String toString() {
         return "@" + adresse;
