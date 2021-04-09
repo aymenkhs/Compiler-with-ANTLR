@@ -5,6 +5,7 @@ public abstract class IDF extends Node{
     private String type;
     private final String name;
     private final Boolean declared;
+    private boolean initialized = false;
 
     public IDF(String type, String name) {
         this.type = type;
@@ -15,6 +16,14 @@ public abstract class IDF extends Node{
     public IDF(String name) {
         this.name = name;
         this.declared = false;
+    }
+
+    public void initialize() {
+        initialized = true;
+    }
+
+    public boolean isInitialized() {
+        return this.initialized;
     }
 
     public String getType() {

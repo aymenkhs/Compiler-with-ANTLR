@@ -11,10 +11,13 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
     private final ArrayList<String> semanticErrors;
 
+    private final ArrayList<String> warnings;
+
     private final SymbolesTable table_Symboles;
 
     public Routines(SymbolesTable table_Symboles) {
         this.semanticErrors = new ArrayList<>();
+        this.warnings = new ArrayList<>();
         this.table_Symboles = table_Symboles;
     }
 
@@ -46,6 +49,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
         /*  we check if the idf exist, and return the IDF (we create a new one with the declared=false if it doesn't exist */
         IDF resultats = check_declarer(idf_name, row, column);
+        resultats.initialize();
         // if the result idf is undeclared in the first place we don't have to check all types errors in the assignement
 
         if (resultats.isDeclared()){
@@ -207,7 +211,14 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
             int column = idToken.getCharPositionInLine();
             String idf_name = ctx.IDF().getText();
 
-            return check_declarer(idf_name, row, column);
+            IDF idf = check_declarer(idf_name, row, column);
+
+            if (!(idf instanceof IdfUndeclared) && !idf.isInitialized()){
+                // we check if the value is not initialized in which case we put a warning
+                warnings.add("ligne : " + row + ", IDF "+ idf.getName() + " utiliser avant initialisation.");
+            }
+
+            return idf;
         } else if (ctx.INTEGER() != null){
             return new ConstanteInteger();
         } else {
@@ -223,7 +234,9 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
         int column = idToken.getCharPositionInLine();
         String idf_name = ctx.IDF().getText();
 
-        return check_declarer(idf_name, row, column);
+        IDF idf = check_declarer(idf_name, row, column);
+        idf.initialize();
+        return idf;
     }
 }
 
