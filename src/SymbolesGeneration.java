@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import generated_files.*;
 import nodes.*;
 
-public class AntlerToExp extends tiny_parserBaseVisitor {
+public class SymbolesGeneration extends tiny_parserBaseVisitor {
 
     private SymbolesTable semantic_table;
     private ArrayList<String> semanticErrors;
 
 
-    public AntlerToExp() {
+    public SymbolesGeneration() {
         this.semantic_table = new SymbolesTable();
         this.semanticErrors = new ArrayList<String>();
     }

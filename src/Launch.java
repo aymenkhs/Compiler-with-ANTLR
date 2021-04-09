@@ -17,7 +17,7 @@ public class Launch {
             tiny_parserParser parser= new tiny_parserParser(token);
             tiny_parserParser.ProgramContext tree= parser.program();
 
-            AntlerToExp visitor= new AntlerToExp();
+            SymbolesGeneration visitor= new SymbolesGeneration();
             visitor.visitProgram(tree);
             System.out.println(visitor.getSemanticErrors());
             System.out.println(visitor.getSemantic_table());
@@ -26,8 +26,8 @@ public class Launch {
             Routines routines= new Routines(table_symboles);
             routines.visitProgram(tree);
 
-            Generation visitorQuad = new Generation();
-            Generation.initComparators();
+            QuadrupletsGeneration visitorQuad = new QuadrupletsGeneration();
+            QuadrupletsGeneration.initComparators();
             visitorQuad.visitProgram(tree);
             Quadruplets quadruplets = visitorQuad.getQuadruplets();
 

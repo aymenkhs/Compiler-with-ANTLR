@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
-public class Generation extends tiny_parserBaseVisitor<Node> {
+public class QuadrupletsGeneration extends tiny_parserBaseVisitor<Node> {
 
     private static HashMap<String,String> comparators;
 
@@ -18,7 +18,7 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
 
     private Stack<AdresseQuad> do_while_LIFO;
 
-    public Generation() {
+    public QuadrupletsGeneration() {
         super();
         this.quadruplets = new Quadruplets();
         this.do_while_LIFO = new Stack<>();
@@ -49,7 +49,7 @@ public class Generation extends tiny_parserBaseVisitor<Node> {
         Node operande1 = visitOperation_mere(ctx.operation_mere().get(0));
         Node operande2 = visitOperation_mere(ctx.operation_mere().get(1));
         Temporaire results = new Temporaire();
-        String operateur = Generation.comparators.get(ctx.getChild(1).getText());
+        String operateur = QuadrupletsGeneration.comparators.get(ctx.getChild(1).getText());
 
         QuadElement quadCond = quadruplets.addQuad(operateur, operande1, operande2, null);
         quadruplets.addQuad("=", new ConstanteBoolean("bool", false), null, results);
