@@ -17,6 +17,12 @@ public class CodeObjetGeneration implements Iterable<String>{
         this.table_Symboles = table_Symboles;
 
         this.codeObjet = new ArrayList<>();
+
+        this.adresses = new ArrayList<>();
+
+        adressesEtiquetes();
+        declaration();
+        operations();
     }
 
     public void declaration(){
