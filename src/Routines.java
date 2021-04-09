@@ -11,10 +11,13 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
     private final ArrayList<String> semanticErrors;
 
+    private final ArrayList<String> warnings;
+
     private final SymbolesTable table_Symboles;
 
     public Routines(SymbolesTable table_Symboles) {
         this.semanticErrors = new ArrayList<>();
+        this.warnings = new ArrayList<>();
         this.table_Symboles = table_Symboles;
     }
 
@@ -46,6 +49,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
         /*  we check if the idf exist, and return the IDF (we create a new one with the declared=false if it doesn't exist */
         IDF resultats = check_declarer(idf_name, row, column);
+        resultats.initialize();
         // if the result idf is undeclared in the first place we don't have to check all types errors in the assignement
 
         if (resultats.isDeclared()){
@@ -59,13 +63,10 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
                 /*  if it's not a string...
                     the possibilities are:
                         - an IDF in which case we compare the type of the operande with the result
-                        - an int in which case we check that the type of the result is int
-                        - a float in which case we check that the type of the result is a float
+                        - or an int or a float in which case we check that the type of the result is int or float
+                    (a float accept an integer value and is automatically casted to an int if asigned to an int)
                 */
-
-
                 Node operande = visitOperation_mere(ctx.operation_mere());
-
                 if (operande == null){
                     return null;
                 }
@@ -78,9 +79,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
                     donc on verifie la classe de la valleur retourner et on la compare avec le type du resultats de l'operation
 
                     Si le type du resultats de l'operarion est un String on s'attend a un IDF String
-                    Si le type du resultats de l'operarion est un Int on s'attend a un IDF ou Constante Int
-                    Si le type du resultats de l'operarion est un Float on verifie uniquement qu'il ne s'aggit pas d'un idf de type String
-
+                    Si le type du resultats de l'operarion est un Int ou Float on verifie uniquement qu'il ne s'aggit pas d'un idf de type String
                 */
 
                 if (resultats.getType().equals("StringCompil")){
@@ -89,15 +88,10 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
                     if(!(operande instanceof Idf_String)){
                         semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " doit etre assigner avec un String ");
                     }
-                } else if (resultats.getType().equals("intCompil")){
-                    // dans se cas on auras un probleme dans le cas ou l'operande est un float ou un string
-                    if(!(operande instanceof Idf_int || operande instanceof ConstanteInteger)){
-                        semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " doit etre assigner avec un Entier ");
-                    }
                 } else {
-                    // dans se cas il s'aggit d'un float et le seul probleme est si on a un IDF (operande) String
+                    // dans se cas il s'aggit d'un float ou int et le seul probleme est si on a un IDF (operande) String
                     if(operande instanceof Idf_String){
-                        semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " est un floatCompil il ne peut pas prendre la valleur d'un StringCompil");
+                        semanticErrors.add("IDF \"" + idf_name + "\" a la ligne " + row + " est un "+ resultats.getType() +" il ne peut pas prendre la valleur d'un StringCompil");
                     }
                 }
             }
@@ -217,7 +211,14 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
             int column = idToken.getCharPositionInLine();
             String idf_name = ctx.IDF().getText();
 
-            return check_declarer(idf_name, row, column);
+            IDF idf = check_declarer(idf_name, row, column);
+
+            if (!(idf instanceof IdfUndeclared) && !idf.isInitialized()){
+                // we check if the value is not initialized in which case we put a warning
+                warnings.add("ligne : " + row + ", IDF "+ idf.getName() + " utiliser avant initialisation.");
+            }
+
+            return idf;
         } else if (ctx.INTEGER() != null){
             return new ConstanteInteger();
         } else {
@@ -233,7 +234,9 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
         int column = idToken.getCharPositionInLine();
         String idf_name = ctx.IDF().getText();
 
-        return check_declarer(idf_name, row, column);
+        IDF idf = check_declarer(idf_name, row, column);
+        idf.initialize();
+        return idf;
     }
 }
 
