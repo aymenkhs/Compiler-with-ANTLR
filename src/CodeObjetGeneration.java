@@ -2,8 +2,9 @@ import nodes.AdresseQuad;
 import nodes.IDF;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class CodeObjetGeneration {
+public class CodeObjetGeneration implements Iterable<String>{
     private Quadruplets quadruplets;
     private SymbolesTable table_Symboles;
 
@@ -128,4 +129,8 @@ public class CodeObjetGeneration {
         }
     }
 
+    @Override
+    public Iterator<String> iterator() {
+        return codeObjet.iterator();
+    }
 }

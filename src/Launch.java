@@ -21,8 +21,9 @@ public class Launch {
             visitor.visitProgram(tree);
             System.out.println(visitor.getSemanticErrors());
             System.out.println(visitor.getSemantic_table());
+            SymbolesTable table_symboles = visitor.getSemantic_table();
 
-            Routines routines= new Routines(visitor.getSemantic_table());
+            Routines routines= new Routines(table_symboles);
             routines.visitProgram(tree);
 
             Generation visitorQuad = new Generation();
@@ -32,6 +33,10 @@ public class Launch {
 
             for(QuadElement quad : quadruplets){
                 System.out.println(quad);
+            }
+            CodeObjetGeneration codeObjet = new CodeObjetGeneration(quadruplets, table_symboles);
+            for(String instruction : codeObjet){
+                System.out.println(instruction);
             }
 
         }catch (IOException e){
