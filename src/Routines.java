@@ -107,6 +107,25 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
     }
 
     @Override
+    public Node visitCondition(tiny_parserParser.ConditionContext ctx) {
+
+        int row = ctx.start.getLine();
+
+        Node operande1 = visitOperation_mere(ctx.operation_mere().get(0));
+        Node operande2 = visitOperation_mere(ctx.operation_mere().get(1));
+
+        if (operande1 instanceof Idf_String){
+            semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une condition ");
+        }
+        
+        if (operande2 instanceof Idf_String){
+            semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une condition ");
+        }
+
+        return null;
+    }
+
+    @Override
     public Node visitOperation_mere(tiny_parserParser.Operation_mereContext ctx) {
 
         if (ctx.operation_mere() != null){
