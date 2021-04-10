@@ -17,8 +17,7 @@ AFFECTATION: '=';
 // comparaison
 COMPARAISON: '<' | '>' | '<=' | '>=' | '<>' | '!=' | '==';
 
-IDF: (LOWERCASE|UPPERCASE)(UPPERCASE|LOWERCASE|DIGIT)*;
-PROGRAMNAME: UPPERCASE('_'?(UPPERCASE|LOWERCASE))*;
+IDF: (LOWERCASE|UPPERCASE)('_'|UPPERCASE|LOWERCASE|DIGIT)*;
 
 // ignoring spaces and new lines
 WHITESPACE: (' ' | '\t')+ -> skip;

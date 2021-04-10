@@ -20,8 +20,8 @@ public class tiny_parserParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, INTEGER=20, REAL=21, PRODUCT=22, DIV=23, PLUS=24, 
-		MINUS=25, AFFECTATION=26, COMPARAISON=27, IDF=28, PROGRAMNAME=29, WHITESPACE=30, 
-		NEWLINE=31, STRING=32, INLINECOMMENT=33, BLOCKCOMMENT=34;
+		MINUS=25, AFFECTATION=26, COMPARAISON=27, IDF=28, WHITESPACE=29, NEWLINE=30, 
+		STRING=31, INLINECOMMENT=32, BLOCKCOMMENT=33;
 	public static final int
 		RULE_program = 0, RULE_declarations = 1, RULE_declaration_type = 2, RULE_type = 3, 
 		RULE_idf_dec = 4, RULE_instructions = 5, RULE_inst = 6, RULE_assignment = 7, 
@@ -52,8 +52,8 @@ public class tiny_parserParser extends Parser {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, "INTEGER", "REAL", "PRODUCT", 
-			"DIV", "PLUS", "MINUS", "AFFECTATION", "COMPARAISON", "IDF", "PROGRAMNAME", 
-			"WHITESPACE", "NEWLINE", "STRING", "INLINECOMMENT", "BLOCKCOMMENT"
+			"DIV", "PLUS", "MINUS", "AFFECTATION", "COMPARAISON", "IDF", "WHITESPACE", 
+			"NEWLINE", "STRING", "INLINECOMMENT", "BLOCKCOMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -108,7 +108,7 @@ public class tiny_parserParser extends Parser {
 	}
 
 	public static class ProgramContext extends ParserRuleContext {
-		public TerminalNode PROGRAMNAME() { return getToken(tiny_parserParser.PROGRAMNAME, 0); }
+		public TerminalNode IDF() { return getToken(tiny_parserParser.IDF, 0); }
 		public DeclarationsContext declarations() {
 			return getRuleContext(DeclarationsContext.class,0);
 		}
@@ -135,7 +135,7 @@ public class tiny_parserParser extends Parser {
 			setState(42);
 			match(T__0);
 			setState(43);
-			match(PROGRAMNAME);
+			match(IDF);
 			setState(44);
 			match(T__1);
 			setState(45);
@@ -1369,7 +1369,7 @@ public class tiny_parserParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3$\u00c4\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3#\u00c4\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3"+
@@ -1388,7 +1388,7 @@ public class tiny_parserParser extends Parser {
 		"\nG\3\2\2\2\fN\3\2\2\2\16U\3\2\2\2\20W\3\2\2\2\22_\3\2\2\2\24c\3\2\2\2"+
 		"\26q\3\2\2\2\30\u0088\3\2\2\2\32\u008a\3\2\2\2\34\u008c\3\2\2\2\36\u0094"+
 		"\3\2\2\2 \u0096\3\2\2\2\"\u009c\3\2\2\2$\u00aa\3\2\2\2&\u00b0\3\2\2\2"+
-		"(\u00b5\3\2\2\2*\u00ba\3\2\2\2,-\7\3\2\2-.\7\37\2\2./\7\4\2\2/\60\7\5"+
+		"(\u00b5\3\2\2\2*\u00ba\3\2\2\2,-\7\3\2\2-.\7\36\2\2./\7\4\2\2/\60\7\5"+
 		"\2\2\60\61\7\6\2\2\61\62\5\4\3\2\62\63\7\7\2\2\63\64\5\f\7\2\64\65\7\b"+
 		"\2\2\65\3\3\2\2\2\66<\3\2\2\2\678\5\6\4\289\5\4\3\29<\3\2\2\2:<\5\6\4"+
 		"\2;\66\3\2\2\2;\67\3\2\2\2;:\3\2\2\2<\5\3\2\2\2=>\5\b\5\2>?\5\n\6\2?@"+
@@ -1397,7 +1397,7 @@ public class tiny_parserParser extends Parser {
 		"\f\7\2LO\3\2\2\2MO\5\16\b\2NI\3\2\2\2NJ\3\2\2\2NM\3\2\2\2O\r\3\2\2\2P"+
 		"V\5\20\t\2QV\5\34\17\2RV\5 \21\2SV\5\"\22\2TV\5*\26\2UP\3\2\2\2UQ\3\2"+
 		"\2\2UR\3\2\2\2US\3\2\2\2UT\3\2\2\2V\17\3\2\2\2WX\7\36\2\2X[\7\34\2\2Y"+
-		"\\\5\24\13\2Z\\\7\"\2\2[Y\3\2\2\2[Z\3\2\2\2\\]\3\2\2\2]^\7\t\2\2^\21\3"+
+		"\\\5\24\13\2Z\\\7!\2\2[Y\3\2\2\2[Z\3\2\2\2\\]\3\2\2\2]^\7\t\2\2^\21\3"+
 		"\2\2\2_`\5\24\13\2`a\7\35\2\2ab\5\24\13\2b\23\3\2\2\2cd\b\13\1\2de\5\26"+
 		"\f\2en\3\2\2\2fg\f\5\2\2gh\7\32\2\2hm\5\26\f\2ij\f\4\2\2jk\7\33\2\2km"+
 		"\5\26\f\2lf\3\2\2\2li\3\2\2\2mp\3\2\2\2nl\3\2\2\2no\3\2\2\2o\25\3\2\2"+
@@ -1410,7 +1410,7 @@ public class tiny_parserParser extends Parser {
 		"\2\2\u0088\u0087\3\2\2\2\u0089\31\3\2\2\2\u008a\u008b\t\3\2\2\u008b\33"+
 		"\3\2\2\2\u008c\u008d\7\16\2\2\u008d\u008e\7\4\2\2\u008e\u008f\5\36\20"+
 		"\2\u008f\u0090\7\5\2\2\u0090\u0091\7\t\2\2\u0091\35\3\2\2\2\u0092\u0095"+
-		"\5\24\13\2\u0093\u0095\7\"\2\2\u0094\u0092\3\2\2\2\u0094\u0093\3\2\2\2"+
+		"\5\24\13\2\u0093\u0095\7!\2\2\u0094\u0092\3\2\2\2\u0094\u0093\3\2\2\2"+
 		"\u0095\37\3\2\2\2\u0096\u0097\7\17\2\2\u0097\u0098\7\4\2\2\u0098\u0099"+
 		"\7\36\2\2\u0099\u009a\7\5\2\2\u009a\u009b\7\t\2\2\u009b!\3\2\2\2\u009c"+
 		"\u009d\7\20\2\2\u009d\u009e\7\4\2\2\u009e\u009f\5\22\n\2\u009f\u00a0\7"+

@@ -1,7 +1,7 @@
 grammar tiny_parser;
 import  tiny_lexer;
 
-program: 'compil' PROGRAMNAME '(' ')' '{' declarations 'start' instructions '}';
+program: 'compil' IDF '(' ')' '{' declarations 'start' instructions '}';
 
 // declaration
 declarations: | declaration_type declarations| declaration_type;
