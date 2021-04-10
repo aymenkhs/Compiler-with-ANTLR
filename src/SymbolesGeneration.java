@@ -48,7 +48,7 @@ public class SymbolesGeneration extends tiny_parserBaseVisitor {
         semantic_table.addprogramName(ctx.IDF().getText());
 
         if (!Character.isUpperCase(ctx.IDF().getText().charAt(0))){
-            semanticErrors.add("ERREUR à la ligne :" + line + ", cololne :" + column + ", LE PREMIER CHARACTERE DU NOM PU PROGRAMME DOIT ÊTRE MAJISCULE\n");
+            semanticErrors.add("ERREUR à la ligne :" + line + ", collone :" + column + ", LE PREMIER CHARACTERE DU NOM DU PROGRAMME DOIT ÊTRE MAJISCULE\n");
         }
 
         return super.visitProgram(ctx);
@@ -70,9 +70,9 @@ public class SymbolesGeneration extends tiny_parserBaseVisitor {
             IDF var = chose_type(type, s);
 
             if (semantic_table.containsVar(var.getName( ))) {
-                semanticErrors.add("ERREUR à la ligne :" + line + ", cololne :" + column + ", variable : '" + var.getName() + "' DEJA DECLARER\n");
+                semanticErrors.add("ERREUR à la ligne :" + line + ", collone :" + column + ", variable : '" + var.getName() + "' DEJA DECLARER\n");
             }else if (semantic_table.isProgramName(var.getName())) {
-                semanticErrors.add("ERREUR à la ligne :" + line + ", cololne :" + column + ", variable : " + var.getName() + " PORTE LE MEME NOM QUE LE NOM DU PROGRAMME\n");
+                semanticErrors.add("ERREUR à la ligne :" + line + ", collone :" + column + ", variable : " + var.getName() + " PORTE LE MEME NOM QUE LE NOM DU PROGRAMME\n");
             } else {
                 semantic_table.addDeclaredVar(var);
             }
