@@ -23,7 +23,6 @@ public class Idf_int extends IDF {
 
     @Override
     public String toString() {
-        return "{nom var : '"+super.toString()+"', type var : intCompil" +
-                ", valeur=" + value+ "}";
+        return "{nom var : '"+super.toString()+"', type var : intCompil}\n";
     }
 }

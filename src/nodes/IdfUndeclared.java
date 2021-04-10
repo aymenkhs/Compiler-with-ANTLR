@@ -27,6 +27,6 @@ public class IdfUndeclared extends IDF{
                 for(int i=0;i<positions.size();i++){
                     ret+="["+positions.get(i)[0]+",";ret+=positions.get(i)[1]+"], ";
                 }
-                return ret+"}";
+                return ret+"}\n";
     }
 }
