@@ -1,0 +1,29 @@
+compil Prog_one ()
+{
+    intCompil a,b,c;
+    StringCompil str;
+    floatCompil vac;
+
+    start
+    a=12;
+    b=5+a;
+    str="hello";
+    vac=4.2;
+    scanCompil(c);
+    printCompil(b);
+
+    if(b>a) then {
+        b=a-2;
+    }
+    else{
+        b=a*2;
+    }
+
+    do{
+        if(c<b+a) then{
+            c=c+1;
+        }
+
+    }while(c<b+a)
+    printCompil("terminé");
+}

@@ -10,7 +10,9 @@ import  static  org.antlr.v4.runtime.CharStreams.fromFileName;
 public class Launch {
     public static void main (String[] args){
         try{
-            String source = "file_program_tests/test1";
+            //mainTest est le test ou on utilise la plupars des fonctionnalité de le compilateur,
+            //ErrorTest est le test ou on mets plusieurs erreurs.
+            String source = "tests/maintest";
             CharStream ca= fromFileName(source);
             tiny_parserLexer lexer= new tiny_parserLexer(ca);
             CommonTokenStream token= new CommonTokenStream(lexer);
@@ -19,25 +21,34 @@ public class Launch {
 
             SymbolesGeneration visitor= new SymbolesGeneration();
             visitor.visitProgram(tree);
-            System.out.println(visitor.getSemanticErrors());
-            System.out.println(visitor.getSemantic_table());
+
             SymbolesTable table_symboles = visitor.getSemantic_table();
 
-            Routines routines= new Routines(table_symboles);
+            Routines routines= new Routines(table_symboles,visitor.getSemanticErrors());
             routines.visitProgram(tree);
+            System.out.println(routines.getTable_Symboles());
+            System.out.println(routines.getWarnings());
 
-            QuadrupletsGeneration visitorQuad = new QuadrupletsGeneration();
-            QuadrupletsGeneration.initComparators();
-            visitorQuad.visitProgram(tree);
-            Quadruplets quadruplets = visitorQuad.getQuadruplets();
+            if(!routines.getSemanticErrors().isEmpty()){
+                System.out.println(routines.getSemanticErrors());
+            }
+            else {
+                QuadrupletsGeneration visitorQuad = new QuadrupletsGeneration();
+                QuadrupletsGeneration.initComparators();
+                visitorQuad.visitProgram(tree);
+                Quadruplets quadruplets = visitorQuad.getQuadruplets();
+                System.out.println("\nLe code intermediaire : ");
+                for(QuadElement quad : quadruplets){
+                    System.out.println(quad);
+                }
+                CodeObjetGeneration codeObjet = new CodeObjetGeneration(quadruplets, table_symboles);
+                System.out.println("\nLe code objet : ");
+                for(String instruction : codeObjet){
+                    System.out.println(instruction);
+                }
+            }
 
-            for(QuadElement quad : quadruplets){
-                System.out.println(quad);
-            }
-            CodeObjetGeneration codeObjet = new CodeObjetGeneration(quadruplets, table_symboles);
-            for(String instruction : codeObjet){
-                System.out.println(instruction);
-            }
+
 
         }catch (IOException e){
             e.printStackTrace();

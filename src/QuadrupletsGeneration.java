@@ -123,7 +123,7 @@ public class QuadrupletsGeneration extends tiny_parserBaseVisitor<Node> {
     @Override
     public Node visitPrintcontent(tiny_parserParser.PrintcontentContext ctx) {
         if (ctx.STRING() != null){
-            return new ConstanteString("string", ctx.getChild(2).getText());
+            return new ConstanteString("string", ctx.getChild(0).getText());
         } else {
             Node n =  visitOperation_mere(ctx.operation_mere());
             return n;

@@ -15,8 +15,8 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
     private final SymbolesTable table_Symboles;
 
-    public Routines(SymbolesTable table_Symboles) {
-        this.semanticErrors = new ArrayList<>();
+    public Routines(SymbolesTable table_Symboles, ArrayList<String> semanticErrors) {
+        this.semanticErrors = semanticErrors;
         this.warnings = new ArrayList<>();
         this.table_Symboles = table_Symboles;
     }
@@ -29,12 +29,12 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
             idf.addOcurence(row, column);
             return idf;
         } else if (table_Symboles.isProgramName(idf_name)) {
-            semanticErrors.add("ERREUR à la ligne" + row + ", colones " + column + "; LE NOM DU PROGRAMME N'EST PAS UNE VARIABLE");
+            semanticErrors.add("ERREUR à la ligne" + row + ", colones " + column + "; LE NOM DU PROGRAMME N'EST PAS UNE VARIABLE\n");
             IdfUndeclared idf = (IdfUndeclared) table_Symboles.getIDF(idf_name);
             idf.addOcurence(row, column);
             return idf;
         } else {
-            semanticErrors.add("ERREUR à la ligne" + row + ", colones " + column + "; Variable " + idf_name + " NON DECLARER");
+            semanticErrors.add("ERREUR à la ligne" + row + ", colones " + column + "; Variable " + idf_name + " NON DECLARER\n");
             // cree un IDF avec valleur declarer = false et la retourner
             IdfUndeclared idf = new IdfUndeclared(idf_name);
             idf.addOcurence(row, column);
@@ -62,7 +62,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
                 // if the son is a String we check if the idf is a string
                 if (!resultats.getType().equals("StringCompil")){
                     semanticErrors.add("ERREUR a la ligne " +  row + ", colones " + column + "; Variable " + idf_name +
-                             " se voit assigner un StringCompil alors qu'il est de type " + resultats.getType());
+                             " se voit assigner un StringCompil alors qu'il est de type " + resultats.getType()+"\n");
                 }
             } else {
                 /*  if it's not a string...
@@ -91,12 +91,12 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
                     // dans se cas le idf (resultats) est de type String et il doit recevoir un idf de type string
 
                     if(!(operande instanceof Idf_String)){
-                        semanticErrors.add("ERREUR a la ligne " +  row + "; Varaible " + idf_name + " doit etre assigner avec un String");
+                        semanticErrors.add("ERREUR a la ligne " +  row + "; Varaible " + idf_name + " doit etre assigner avec un String\n");
                     }
                 } else {
                     // dans se cas il s'aggit d'un float ou int et le seul probleme est si on a un IDF (operande) String
                     if(operande instanceof Idf_String){
-                        semanticErrors.add("ERREUR a la ligne " +  row + "; Varaible " + idf_name + " est un "+ resultats.getType() +" il ne peut pas prendre la valleur d'un StringCompil");
+                        semanticErrors.add("ERREUR a la ligne " +  row + "; Varaible " + idf_name + " est un "+ resultats.getType() +" il ne peut pas prendre la valleur d'un StringCompil\n");
                     }
                 }
             }
@@ -115,11 +115,11 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
         Node operande2 = visitOperation_mere(ctx.operation_mere().get(1));
 
         if (operande1 instanceof Idf_String){
-            semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une condition ");
+            semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une condition \n");
         }
         
         if (operande2 instanceof Idf_String){
-            semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une condition ");
+            semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une condition \n");
         }
 
         return null;
@@ -137,7 +137,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
             if (operande1 instanceof Idf_String || operande2 instanceof Idf_String){
                 int row = ctx.start.getLine();
-                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation \n");
                 return null;
             }
 
@@ -166,7 +166,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
             if (operande1 instanceof Idf_String || operande2 instanceof Idf_String){
                 int row = ctx.start.getLine();
-                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation \n");
                 return null;
             }
 
@@ -198,7 +198,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
             if(node instanceof Idf_String){
                 int row = ctx.start.getLine();
-                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation \n");
                 return null;
             } else if (node instanceof Idf_int){
                 return new ConstanteInteger();
@@ -216,7 +216,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
             if(node instanceof Idf_String){
                 int row = ctx.start.getLine();
-                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation ");
+                semanticErrors.add("ligne : " + row + ", un StringCompil ne peut pas etre dans une operation \n");
                 return null;
             }
 
@@ -239,7 +239,7 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
 
             if (!(idf instanceof IdfUndeclared) && !idf.isInitialized()){
                 // we check if the value is not initialized in which case we put a warning
-                warnings.add("ligne : " + row + ", Variable "+ idf.getName() + " utiliser avant initialisation.");
+                warnings.add("ligne : " + row + ", Variable "+ idf.getName() + " utiliser avant initialisation.\n");
             }
 
             return idf;
@@ -261,6 +261,18 @@ public class Routines extends tiny_parserBaseVisitor<Node>{
         IDF idf = check_declarer(idf_name, row, column);
         idf.initialize();
         return idf;
+    }
+
+    public ArrayList<String> getSemanticErrors() {
+        return semanticErrors;
+    }
+
+    public ArrayList<String> getWarnings() {
+        return warnings;
+    }
+
+    public SymbolesTable getTable_Symboles() {
+        return table_Symboles;
     }
 }
 

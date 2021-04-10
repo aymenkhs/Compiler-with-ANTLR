@@ -19,4 +19,14 @@ public class IdfUndeclared extends IDF{
         tab[1] = column;
         positions.add(tab);
     }
+
+    @Override
+    public String toString() {
+        String ret= "{"+super.toString()+", IDF non declaré," +
+                "Occurences : ";
+                for(int i=0;i<positions.size();i++){
+                    ret+="["+positions.get(i)[0]+",";ret+=positions.get(i)[1]+"], ";
+                }
+                return ret+"}";
+    }
 }

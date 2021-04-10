@@ -24,8 +24,7 @@ public class Idf_String extends IDF{
 
     @Override
     public String toString() {
-        return super.toString()+"  Idf_String{" +
-                "value='" + value + '\'' +
-                '}';
+        return "{nom var : '"+super.toString()+"', type var : StringCompil" +
+                ", valeur=" + value + "}";
     }
 }

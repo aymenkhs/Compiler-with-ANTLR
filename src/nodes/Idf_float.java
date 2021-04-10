@@ -20,8 +20,7 @@ public class Idf_float extends IDF{
 
     @Override
     public String toString() {
-        return super.toString()+"   Idf_float{" +
-                "value=" + value +
-                '}';
+        return "{nom var : '"+super.toString()+"', type var : floatCompil" +
+                ", valeur=" + value + "}";
     }
 }

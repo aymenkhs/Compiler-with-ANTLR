@@ -74,4 +74,12 @@ public class SymbolesTable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "\nLa table dest symboles : \n" +
+                "Les variables declarés sont : " + declaredVars +
+                ",\nLes variables non declarés sont : " + unDeclaredVars +
+                ",\nLe nom du progamme : '" + programName + '\'' +
+                '}';
+    }
 }
