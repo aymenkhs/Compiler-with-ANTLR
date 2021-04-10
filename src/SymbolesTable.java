@@ -6,6 +6,8 @@ public class SymbolesTable {
 
     private final ArrayList<IDF> declaredVars, unDeclaredVars;
 
+    private String programName;
+
     public SymbolesTable() {
         this.declaredVars =new ArrayList<IDF>();
         this.unDeclaredVars =new ArrayList<IDF>();
@@ -13,6 +15,14 @@ public class SymbolesTable {
 
     public ArrayList<IDF> getDeclaredVars() {
         return declaredVars;
+    }
+
+    public void addprogramName(String programName){
+        this.programName = programName;
+    }
+
+    public boolean isProgramName(String idfName){
+        return idfName.equals(programName);
     }
 
     public void addDeclaredVar(IDF idf){
@@ -23,8 +33,7 @@ public class SymbolesTable {
         unDeclaredVars.add(idf);
     }
 
-
-    public Boolean containsVar(String idfName){
+    public boolean containsVar(String idfName){
         for (IDF idf : declaredVars) {
             if (idf.getName().equals(idfName)) {
                 return true;

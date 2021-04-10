@@ -7,8 +7,8 @@ import nodes.*;
 
 public class SymbolesGeneration extends tiny_parserBaseVisitor {
 
-    private SymbolesTable semantic_table;
-    private ArrayList<String> semanticErrors;
+    private final SymbolesTable semantic_table;
+    private final ArrayList<String> semanticErrors;
 
 
     public SymbolesGeneration() {
@@ -28,22 +28,29 @@ public class SymbolesGeneration extends tiny_parserBaseVisitor {
 
     public IDF chose_type(String type,String name){
         if(type.equals("intCompil")){
-            Idf_int var= new Idf_int(type,name);
-            return var;
+            return new Idf_int(type,name);
         }
         else if(type.equals("floatCompil")){
-            Idf_float var= new Idf_float(type,name);
-            return var;
+            return new Idf_float(type,name);
         }
         else {
-            Idf_String var= new Idf_String(type,name);
-            return var;
+            return new Idf_String(type,name);
         }
-
     }
 
     @Override
     public Object visitProgram(tiny_parserParser.ProgramContext ctx) {
+        Token idToken = ctx.IDF().getSymbol();
+
+        int line = idToken.getLine();
+        int column = idToken.getCharPositionInLine();
+
+        semantic_table.addprogramName(ctx.IDF().getText());
+
+        if (!Character.isUpperCase(ctx.IDF().getText().charAt(0))){
+            semanticErrors.add("ERROR at line :" + line + ", column :" + column + ", THE FIRST CHARACTER OF THE PROGRAM NAME MUST BE UPPERCASE");
+        }
+
         return super.visitProgram(ctx);
     }
 
@@ -59,13 +66,14 @@ public class SymbolesGeneration extends tiny_parserBaseVisitor {
         String names=ctx.getChild(1).getText();
         String[] array = names.split(",");
 
-        for(int i=0;i<array.length;i++){
-            IDF var=chose_type(type,array[i]);
+        for (String s : array) {
+            IDF var = chose_type(type, s);
 
-            if(semantic_table.containsVar(var.getName())){
-                semanticErrors.add("variable : "+var.getName()+" ALRDY DEClARED! at line "+line+" column "+column);
-            }
-            else {
+            if (semantic_table.containsVar(var.getName( ))) {
+                semanticErrors.add("ERROR at line :" + line + ", column :" + column + ", variable : " + var.getName() + " ALREADY DEClARED");
+            }else if (semantic_table.isProgramName(var.getName())) {
+                semanticErrors.add("ERROR at line :" + line + ", column :" + column + ", variable : " + var.getName() + " IS THE SAME AS THE PROGRAM NAME");
+            } else {
                 semantic_table.addDeclaredVar(var);
             }
         }
