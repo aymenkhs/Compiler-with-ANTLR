@@ -1,4 +1,4 @@
-This is a small compilator in java that uses ANTLR as a lexer and parser
+This is a small compiler in java that uses ANTLR as a lexer and parser
 
 After parsing our grammar we check lexical errors, generate Quadruples, and then assembly code using the visitor class to walk our tree
 
